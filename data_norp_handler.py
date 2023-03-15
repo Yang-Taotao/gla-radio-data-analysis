@@ -4,8 +4,11 @@ import matplotlib.pyplot as plt
 import scienceplots
 from data_loader import csv_loader
 
-# NORP data loader
+# Plot style configuration
 plt.style.use(["science", "notebook", "no-latex"])
+
+# NORP data loader
+
 
 def norp_loader(data_norp_path):
     # Date of observation data recording
