@@ -1,14 +1,18 @@
 # Library import
 import numpy as np
 import matplotlib.pyplot as plt
+# Data handler import
 from data_norp_handler import (
     norp_loader,
     norp_filter,
     norp_quiet_sun,
-    norp_plotter,
 )
 from data_rstn_handler import (
     rstn_loader,
+)
+# Data plotter import
+from data_plotter import (
+    norp_plotter,
 )
 
 # Data path repo
