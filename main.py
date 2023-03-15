@@ -17,6 +17,11 @@ from data_plotter import (
     rstn_plotter,
     # combined_plotter,
 )
+# Data fitter import
+# from data_fitter import (
+    # gyro_fitter,
+    # plas_fitter,
+# )
 
 # Data path repo
 # Assign norp file path
