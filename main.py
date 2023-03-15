@@ -7,10 +7,17 @@ from data_norp_handler import (
     norp_quiet_sun,
     norp_plotter,
 )
+from data_rstn_handler import (
+    rstn_loader,
+)
 
-# Data repo - norp - norp_event
+# Data path repo
 # Assign norp file path
 data_norp_path = "./data/norp_event_131028/"
+# Assign apl and phf file path
+data_apl_path, data_phf_path = "./data/apl131028", "./data/phf131027"
+
+# Data repo - norp - norp_event
 # Deposit norp arrays
 (
     data_norp_day,
@@ -26,6 +33,8 @@ data_norp_tim_valid, data_norp_fi_valid = norp_filter(
 )
 # Deposit quiet sun result
 data_norp_fi_peak = norp_quiet_sun(data_norp_fi_valid)
+
+# Plotter - norp - norp_event
 # Assign the peaktime of flux recording
 data_norp_peak_time = "01:59:38"
 # Plot the NORP data
@@ -34,5 +43,13 @@ data_norp_plot = norp_plotter(
 )
 
 # Data repo - rstn - apl | phf
-# Assign apl and phf file path
-data_apl_path, data_phf_path = "./data/apl131028", "./data/phf131027"
+# Deposit rstn arrays
+(
+    data_apl_flux,
+    data_apl_freq,
+    data_apl_tim,
+    data_phf_flux,
+    data_phf_freq,
+    data_phf_tim,
+) = rstn_loader(data_apl_path, data_phf_path)
+
