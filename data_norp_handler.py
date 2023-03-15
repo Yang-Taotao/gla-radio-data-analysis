@@ -60,7 +60,7 @@ def norp_quiet_sun(data_norp_array):
     return data_norp_fi_peak
 
 
-# NORP plotter
+# NORP plotter - Pending peak time plot and further customization
 
 
 def norp_plotter(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):

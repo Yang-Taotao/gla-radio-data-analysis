@@ -8,7 +8,7 @@ from data_norp_handler import (
     norp_plotter,
 )
 
-# Data repo - norp_event
+# Data repo - norp - norp_event
 # Assign norp file path
 data_norp_path = "./data/norp_event_131028/"
 # Deposit norp arrays
@@ -30,3 +30,7 @@ data_norp_peak_time = "01:59:38"
 data_norp_plot = norp_plotter(
     data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time
 )
+
+# Data repo - rstn - apl | phf
+# Assign apl and phf file path
+data_apl_path, data_phf_path = "./data/apl131028", "./data/phf131027"
