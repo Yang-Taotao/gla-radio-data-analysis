@@ -11,18 +11,23 @@ plt.style.use(["science", "notebook", "no-latex"])
 
 
 def norp_loader(data_norp_path):
-    # Date of observation data recording
-    data_norp_day = csv_loader(data_norp_path + "day.csv")
-    # Stokes I param (total flux) for each freq
-    data_norp_fi = csv_loader(data_norp_path + "fi.csv")
-    # List of observed freq
-    data_norp_freq = csv_loader(data_norp_path + "freq.csv")
-    # ?????
-    data_norp_fv = csv_loader(data_norp_path + "fv.csv")
-    # List of boolean val that checks if observations are valid
-    data_norp_mvd = csv_loader(data_norp_path + "mvd.csv", dtype=int)
-    # Specify time for recordings
-    data_norp_tim = csv_loader(data_norp_path + "tim.csv", dtype=np.uint64)
+    # Load into arrays
+    (
+        data_norp_day,  # Days since 1979-01-01
+        data_norp_fi,   # Flux data at different freq
+        data_norp_freq, # List of recorded freq
+        data_norp_fv,   # ???
+        data_norp_mvd,  # Data validit checker, share dimension with data_norp_fi
+        data_norp_tim,  # Milliseconds since the day and days since 1979-01-01
+    ) = (
+        csv_loader(data_norp_path + "day.csv"),
+        csv_loader(data_norp_path + "fi.csv"),
+        csv_loader(data_norp_path + "freq.csv"),
+        csv_loader(data_norp_path + "fv.csv"),
+        csv_loader(data_norp_path + "mvd.csv", dtype=int),
+        csv_loader(data_norp_path + "tim.csv", dtype=np.uint64),
+    )
+
     # Return func call
     return (
         data_norp_day,
@@ -37,11 +42,7 @@ def norp_loader(data_norp_path):
 # NORP data filter based on mvd file
 
 
-def norp_filter(data_norp_path):
-    # Read data into arrays
-    data_norp_mvd = csv_loader(data_norp_path + "mvd.csv", dtype=int)
-    data_norp_tim = csv_loader(data_norp_path + "tim.csv", dtype=np.uint64)
-    data_norp_fi = csv_loader(data_norp_path + "fi.csv")
+def norp_filter(data_norp_mvd, data_norp_tim, data_norp_fi): 
     # Generate valid data mask based on boolean readout over single rows
     data_norp_mask = np.all(data_norp_mvd.astype(bool), axis=1)
     # Filter the time and flux data through mask
