@@ -14,7 +14,7 @@ plt.style.use(["science", "notebook", "no-latex"])
 def norp_plotter(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
     # Plot with loops
     [
-        plt.plot(data_norp_tim_valid[:, 0], data_norp_fi_peak[:, i])
+        plt.plot(data_norp_tim_valid, data_norp_fi_peak[:, i])
         for i in range(data_norp_fi_peak.shape[1])
     ]
     # Try plotting for the peak value here, need additional work
@@ -33,12 +33,12 @@ def norp_plotter(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
 def rstn_plotter(data_apl_tim, data_phf_tim, data_apl_flux_peak, data_phf_flux_peak):
     # Plot apl data with loops
     [
-        plt.plot(data_apl_tim[:, 0], data_apl_flux_peak[:, i])
+        plt.plot(data_apl_tim, data_apl_flux_peak[:, i])
         for i in range(data_apl_flux_peak.shape[1])
     ]
     # Plot phf data with loops
     [
-        plt.plot(data_phf_tim[:, 0], data_phf_flux_peak[:, i])
+        plt.plot(data_phf_tim, data_phf_flux_peak[:, i])
         for i in range(data_phf_flux_peak.shape[1])
     ]
     # Plot customizations

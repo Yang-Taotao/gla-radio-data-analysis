@@ -16,11 +16,13 @@ def csv_loader(file_path, dtype=float):
             for ms, days in data
         ]
         # Convert days since time base to YYYY-MM-DD
-        time_days = [dt.strftime("%Y-%m-%d") for dt in time_repo]
+        # time_days = [dt.strftime("%Y-%m-%d") for dt in time_repo]
         # Convert milliseconds since the day to HH:MM:SS
-        time_prec = [dt.strftime("%H:%M:%S") for dt in time_repo]
-        # Recombine the converted datetime data
-        time_data = np.column_stack((time_prec, time_days))
+        # time_prec = [dt.strftime("%H:%M:%S") for dt in time_repo]
+        # Combined datetime data
+        time_data = [dt.strftime("%Y-%m-%d %H:%M:%S") for dt in time_repo]
+        # Combined datetime data
+        time_data = np.array(time_data)
         # Return converted time data array
         return time_data
     # Data loader for all other dtype
