@@ -9,6 +9,7 @@ from data_norp_handler import (
 )
 from data_rstn_handler import (
     rstn_loader,
+    rstn_quiet_sun,
 )
 # Data plotter import
 from data_plotter import (
@@ -31,11 +32,11 @@ data_apl_path, data_phf_path = "./data/apl131028", "./data/phf131027"
     data_norp_mvd,
     data_norp_tim,
 ) = norp_loader(data_norp_path)
-# Deposit filtered arrays
+# Deposit norp filtered arrays
 data_norp_tim_valid, data_norp_fi_valid = norp_filter(
     data_norp_mvd, data_norp_tim, data_norp_fi
 )
-# Deposit quiet sun result
+# Deposit norp quiet sun result
 data_norp_fi_peak = norp_quiet_sun(data_norp_fi_valid)
 
 # Plotter - norp - norp_event
@@ -56,4 +57,6 @@ data_norp_plot = norp_plotter(
     data_phf_freq,
     data_phf_tim,
 ) = rstn_loader(data_apl_path, data_phf_path)
+# Deposit rstn quiet sun result
+data_apl_flux_peak, data_phf_flux_peak = rstn_quiet_sun(data_apl_flux, data_phf_flux)
 

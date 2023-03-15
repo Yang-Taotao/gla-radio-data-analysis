@@ -36,3 +36,21 @@ def rstn_loader(data_apl_path, data_phf_path):
         data_phf_freq,
         data_phf_tim,
     )
+
+
+# RSTN quiet sun flux data calculator
+
+
+def rstn_quiet_sun(data_apl_flux, data_phf_flux):
+    # Calculate mean flux from all freq specific valid flux values
+    data_apl_flux_quiet, data_phf_flux_quiet = (
+        np.mean(data_apl_flux_quiet, axis=0),
+        np.mean(data_phf_flux_quiet, axis=0),
+    )
+    # Take out the quiet sun background from the valid flux values
+    data_apl_flux_peak, data_phf_flux_peak = (
+        data_apl_flux - data_apl_flux_quiet,
+        data_phf_flux - data_phf_flux_quiet,
+    )
+    # Return func call
+    return data_apl_flux_peak, data_phf_flux_peak

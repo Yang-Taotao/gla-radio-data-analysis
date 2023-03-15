@@ -56,7 +56,7 @@ def norp_filter(data_norp_mvd, data_norp_tim, data_norp_fi):
 
 
 def norp_quiet_sun(data_norp_array):
-    # Calculate mean flux from all valid flux values
+    # Calculate mean flux from all freq specific valid flux values
     data_norp_fi_quiet = np.mean(data_norp_array, axis=0)
     # Take out the quiet sun background from the valid flux values
     data_norp_fi_peak = data_norp_array - data_norp_fi_quiet

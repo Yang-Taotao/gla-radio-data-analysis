@@ -31,5 +31,8 @@ Data modules:
 - data_norp_handler.py  ## To handle files related to NoRP data
 - data_rstn_handler.py  ## To handle files related to RSTN data
 
+Plotter modules:
+- data_plotter.py       ## To plot figures
+
 Readme:
 - Readme.md             ## Simple readme file
