@@ -21,7 +21,9 @@ data_norp_path = "./data/norp_event_131028/"
     data_norp_tim,
 ) = norp_loader(data_norp_path)
 # Deposit filtered arrays
-data_norp_tim_valid, data_norp_fi_valid = norp_filter(data_norp_path)
+data_norp_tim_valid, data_norp_fi_valid = norp_filter(
+    data_norp_mvd, data_norp_tim, data_norp_fi
+)
 # Deposit quiet sun result
 data_norp_fi_peak = norp_quiet_sun(data_norp_fi_valid)
 # Assign the peaktime of flux recording
