@@ -27,5 +27,5 @@ def csv_loader(file_path, dtype=float):
     else:
         # Load all other type of data
         data = np.loadtxt(file_path, delimiter=",", dtype=dtype)
-        # Return loaded data arrays
+        # Return data
         return data

@@ -20,10 +20,10 @@ def rstn_loader(data_apl_path, data_phf_path):
         data_phf_freq,  # Freq of apl - Palehua data
         data_phf_tim,   # Time of apl - Palehua data
     ) = (
-        csv_loader(data_apl_path + "flux.csv"),
+        csv_loader(data_apl_path + "flux.csv").transpose(),
         csv_loader(data_apl_path + "freq.csv"),
         csv_loader(data_apl_path + "tim.csv", dtype=np.uint64),
-        csv_loader(data_phf_path + "flux.csv"),
+        csv_loader(data_phf_path + "flux.csv").transpose(),
         csv_loader(data_phf_path + "freq.csv"),
         csv_loader(data_phf_path + "tim.csv", dtype=np.uint64),
     )
@@ -44,8 +44,8 @@ def rstn_loader(data_apl_path, data_phf_path):
 def rstn_quiet_sun(data_apl_flux, data_phf_flux):
     # Calculate mean flux from all freq specific valid flux values
     data_apl_flux_quiet, data_phf_flux_quiet = (
-        np.mean(data_apl_flux_quiet, axis=0),
-        np.mean(data_phf_flux_quiet, axis=0),
+        np.mean(data_apl_flux, axis=0),
+        np.mean(data_phf_flux, axis=0),
     )
     # Take out the quiet sun background from the valid flux values
     data_apl_flux_peak, data_phf_flux_peak = (
