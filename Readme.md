@@ -21,3 +21,15 @@ We will perform the tasks with the following steps:
 6. Load RSTN data
 7. Fit gyrosynchrotron emission
 8. Fit plasma emission
+
+## File structure
+Main file:
+- main.py               ## main script
+
+Data modules:
+- data_loader.py        ## To load csv files
+- data_norp_handler.py  ## To handle files related to NoRP data
+- data_rstn_handler.py  ## To handle files related to RSTN data
+
+Readme:
+- Readme.md             ## Simple readme file
