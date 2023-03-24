@@ -53,4 +53,4 @@ def rstn_quiet_sun(data_apl_flux, data_phf_flux):
         data_phf_flux - data_phf_flux_quiet,
     )
     # Return func call
-    return data_apl_flux_peak, data_phf_flux_peak
+    return (data_apl_flux_peak, data_phf_flux_peak)

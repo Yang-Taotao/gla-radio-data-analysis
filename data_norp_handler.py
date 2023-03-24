@@ -1,3 +1,6 @@
+"""
+
+"""
 # Library import
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,8 +17,8 @@ def norp_loader(data_norp_path):
     # Load into arrays
     (
         # data_norp_day,  # Days since 1979-01-01 - unused
-        data_norp_fi,   # Flux data at different freq
-        data_norp_freq, # List of recorded freq
+        data_norp_fi,  # Flux data at different freq
+        data_norp_freq,  # List of recorded freq
         # data_norp_fv,   # ??? - unused
         data_norp_mvd,  # Data validit checker, share dimension with data_norp_fi
         data_norp_tim,  # Milliseconds since the day and days since 1979-01-01
@@ -42,7 +45,7 @@ def norp_loader(data_norp_path):
 # NORP data filter based on mvd file
 
 
-def norp_filter(data_norp_mvd, data_norp_tim, data_norp_fi): 
+def norp_filter(data_norp_mvd, data_norp_tim, data_norp_fi):
     # Generate valid data mask based on boolean readout over single rows
     data_norp_mask = np.all(data_norp_mvd.astype(bool), axis=1)
     # Filter the time and flux data through mask
@@ -62,5 +65,3 @@ def norp_quiet_sun(data_norp_array):
     data_norp_fi_peak = data_norp_array - data_norp_fi_quiet
     # Return func call
     return data_norp_fi_peak
-
-

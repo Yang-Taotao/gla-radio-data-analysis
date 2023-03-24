@@ -23,7 +23,7 @@ def norp_plotter(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
     # Plot customizations
     plt.xlabel("Time", fontsize=14)
     plt.ylabel("Valid flux negating quiet sun", fontsize=14)
-    plt.title("NoRp quiet sun subtracted flux again time", fontsize=16)
+    plt.title("NoRP quiet sun subtracted flux again time", fontsize=16)
     plt.show()
     # Return func call
     return None
