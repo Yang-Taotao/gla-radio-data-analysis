@@ -20,10 +20,10 @@ def rstn_loader(data_apl_path, data_phf_path):
         data_phf_freq,  # Freq of apl - Palehua data
         data_phf_tim,   # Time of apl - Palehua data
     ) = (
-        csv_loader(data_apl_path + "flux.csv").transpose(),
+        csv_loader(data_apl_path + "flux.csv"),
         csv_loader(data_apl_path + "freq.csv"),
         csv_loader(data_apl_path + "tim.csv", dtype=np.uint64),
-        csv_loader(data_phf_path + "flux.csv").transpose(),
+        csv_loader(data_phf_path + "flux.csv"),
         csv_loader(data_phf_path + "freq.csv"),
         csv_loader(data_phf_path + "tim.csv", dtype=np.uint64),
     )
