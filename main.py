@@ -70,8 +70,8 @@ data_apl_flux_peak, data_phf_flux_peak = rstn_quiet_sun(
 )
 
 # Plot the RSTN data
-data_rstn_plot = rstn_plotter(
-    data_apl_tim, data_phf_tim, data_apl_flux_peak, data_phf_flux_peak
-)
+#data_rstn_plot = rstn_plotter(
+#    data_apl_tim, data_phf_tim, data_apl_flux_peak, data_phf_flux_peak
+#)
 
 # Combined plot

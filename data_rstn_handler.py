@@ -3,8 +3,6 @@ import numpy as np
 from data_loader import csv_loader
 
 # RSTN data loader
-
-
 def rstn_loader(data_apl_path, data_phf_path):
     # Load into arrays
     (
@@ -34,8 +32,6 @@ def rstn_loader(data_apl_path, data_phf_path):
 
 
 # RSTN quiet sun flux data calculator
-
-
 def rstn_quiet_sun(data_apl_flux, data_phf_flux):
     # Calculate mean flux from all freq specific valid flux values
     data_apl_flux_quiet, data_phf_flux_quiet = (

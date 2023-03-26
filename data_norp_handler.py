@@ -3,8 +3,6 @@ import numpy as np
 from data_loader import csv_loader
 
 # NORP data loader
-
-
 def norp_loader(data_norp_path):
     # Load into arrays
     (
@@ -29,8 +27,6 @@ def norp_loader(data_norp_path):
 
 
 # NORP data filter based on mvd file
-
-
 def norp_filter(data_norp_mvd, data_norp_tim, data_norp_fi):
     # Generate valid data mask based on boolean readout over single rows
     data_norp_mask = np.all(data_norp_mvd.astype(bool), axis=1)
@@ -42,8 +38,6 @@ def norp_filter(data_norp_mvd, data_norp_tim, data_norp_fi):
 
 
 # NORP quiet sun flux data calculator
-
-
 def norp_quiet_sun(data_norp_array):
     # Calculate mean flux from all freq specific valid flux values
     data_norp_fi_quiet = np.mean(data_norp_array, axis=0)

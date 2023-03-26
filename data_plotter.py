@@ -1,26 +1,28 @@
 # Library import
-import numpy as np
 import matplotlib.pyplot as plt
 import scienceplots
-from data_loader import csv_loader
 
 # Plot style configuration
-plt.style.use(["science", "notebook", "no-latex"])
+plt.style.use(["science", "notebook", "grid"])
 
 # Plotters
+
+
 # NORP plotter - Pending peak time plot and further customization
-
-
-def norp_plotter(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
+def norp_plotter2(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
     # Plot with loops
     [
         plt.plot(data_norp_tim_valid, data_norp_fi_peak[:, column])
         for column in range(data_norp_fi_peak.shape[1])
     ]
+
     # Try plotting for the peak value here, need additional work
-    peak = np.where(data_norp_tim_valid == data_norp_peak_time)
-    plt.axvline(x=peak)
+    # peak = np.where(data_norp_tim_valid == data_norp_peak_time)
+    # plt.axvline(x=peak)
+    
     # Plot customizations
+    plt.xticks(data_norp_tim_valid[::1000], rotation=30)
+    plt.ylim(bottom=0)
     plt.xlabel("Time", fontsize=14)
     plt.ylabel("Valid flux negating quiet sun", fontsize=14)
     plt.title("NoRP quiet sun subtracted flux again time", fontsize=16)
