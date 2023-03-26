@@ -24,18 +24,18 @@ from data_plotter import (
 # )
 
 # Data path repo
-# Assign norp file path
-data_norp_path = "./data/norp_event_131028/"
-# Assign apl and phf file path
-data_apl_path, data_phf_path = "./data/apl131028/", "./data/phf131027/"
+# Assign norp, apl, and phf file path
+data_norp_path, data_apl_path, data_phf_path = (
+    "./data/norp_event_131028/", 
+    "./data/apl131028/", 
+    "./data/phf131027/",
+)
 
 # Data repo - norp - norp_event
 # Deposit norp arrays, dat and fv array unused
 (
-    # data_norp_day,
     data_norp_fi,
     data_norp_freq,
-    # data_norp_fv,
     data_norp_mvd,
     data_norp_tim,
 ) = norp_loader(data_norp_path)
@@ -48,7 +48,7 @@ data_norp_fi_peak = norp_quiet_sun(data_norp_fi_valid)
 
 # Plotter - norp - norp_event
 # Assign the peaktime of flux recording
-data_norp_peak_time = "01:59:38"
+data_norp_peak_time = "2013-10-28 01:59:38"
 # Plot the NORP data
 data_norp_plot = norp_plotter(
     data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time
