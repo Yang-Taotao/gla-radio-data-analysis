@@ -1,3 +1,10 @@
+"""
+This is the RSTN data handler script of the radio data analysis project.
+
+Created on Wed Mar 15 2023
+
+@author: Yang-Taotao
+"""
 # Library import
 import numpy as np
 from data_loader import csv_loader

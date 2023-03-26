@@ -1,5 +1,7 @@
 ## Radio data analysis
 This is a course project for *ASTRO-5010* at *University of Glasgow*.
+- Drafted: Mar 15, 2023
+- Editted: Mar 26, 2023
 
 ## Data set
 We employ the data obtained from:
@@ -24,12 +26,17 @@ We will perform the tasks with the following steps:
 
 ## File structure
 Main file:
-- main.py               ## main script
+- main.py               ## The master script
 
-Data modules:
+Data loader modules:
 - data_loader.py        ## To load csv files
+
+Data processing modules:
 - data_norp_handler.py  ## To handle files related to NoRP data
 - data_rstn_handler.py  ## To handle files related to RSTN data
+
+Data fitter modules:
+- data_fitter.py        ## To fit the data to assigned model
 
 Plotter modules:
 - data_plotter.py       ## To plot figures
