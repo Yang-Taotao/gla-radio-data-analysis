@@ -7,9 +7,6 @@ def csv_loader(file_path, dtype=float):
     # Initial data load with specified dtype
     data = np.loadtxt(file_path, delimiter=",", dtype=dtype)
 
-    # Data transposer if there are more columns than rows
-    data = data.transpose() if data.shape[1] > data.shape[0] else data
-
     # Time data loader and convertor
     if dtype == np.uint64:
         # Define start point of datetime as day01

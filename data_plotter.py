@@ -14,12 +14,12 @@ plt.style.use(["science", "notebook", "no-latex"])
 def norp_plotter(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
     # Plot with loops
     [
-        plt.plot(data_norp_tim_valid, data_norp_fi_peak[:, i])
-        for i in range(data_norp_fi_peak.shape[1])
+        plt.plot(data_norp_tim_valid, data_norp_fi_peak[:, column])
+        for column in range(data_norp_fi_peak.shape[1])
     ]
     # Try plotting for the peak value here, need additional work
-    # peak = np.where(data_norp_tim_valid == data_norp_peak_time)
-    # plt.axvline(x=peak)
+    peak = np.where(data_norp_tim_valid == data_norp_peak_time)
+    plt.axvline(x=peak)
     # Plot customizations
     plt.xlabel("Time", fontsize=14)
     plt.ylabel("Valid flux negating quiet sun", fontsize=14)
