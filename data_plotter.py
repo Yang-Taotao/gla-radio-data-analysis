@@ -1,4 +1,5 @@
 # Library import
+import numpy as np
 import matplotlib.pyplot as plt
 import scienceplots
 
@@ -9,7 +10,7 @@ plt.style.use(["science", "notebook", "grid"])
 
 
 # NORP plotter - Pending peak time plot and further customization
-def norp_plotter2(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
+def norp_plotter(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
     # Plot with loops
     [
         plt.plot(data_norp_tim_valid, data_norp_fi_peak[:, column])
@@ -17,15 +18,20 @@ def norp_plotter2(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time):
     ]
 
     # Try plotting for the peak value here, need additional work
-    # peak = np.where(data_norp_tim_valid == data_norp_peak_time)
-    # plt.axvline(x=peak)
+    plt.axvline(x=data_norp_peak_time, color='crimson', linestyle='--')
+
+    # Gain peak value x-axis index
+    peak = np.where(data_norp_tim_valid == data_norp_peak_time)[0][0]
+    
+    # Plot range limiter
+    # plt.xlim(data_norp_tim_valid[peak-300], data_norp_tim_valid[peak+300])
+    plt.ylim(bottom=0)
     
     # Plot customizations
-    plt.xticks(data_norp_tim_valid[::1000], rotation=30)
-    plt.ylim(bottom=0)
+    plt.xticks(data_norp_tim_valid[::1000], rotation=90, fontsize=10)
     plt.xlabel("Time", fontsize=14)
     plt.ylabel("Valid flux negating quiet sun", fontsize=14)
-    plt.title("NoRP quiet sun subtracted flux again time", fontsize=16)
+    plt.title("NoRP quiet sun subtracted flux against time", fontsize=16)
     plt.show()
     # Return func call
     return None

@@ -1,6 +1,6 @@
 # Library import
 import numpy as np
-import datetime
+import datetime as dt
 
 # CSV data parser
 def csv_loader(file_path, dtype=float):
@@ -10,10 +10,10 @@ def csv_loader(file_path, dtype=float):
     # Time data loader and convertor
     if dtype == np.uint64:
         # Define start point of datetime as day01
-        time_base = datetime.datetime(1979, 1, 1) - datetime.timedelta(days=1)
+        time_base = dt.datetime(1979, 1, 1) - dt.timedelta(days=1)
         # Construct time function for calculating time result
         time_repo = [
-            time_base + datetime.timedelta(milliseconds=ms + days * 86400000)
+            time_base + dt.timedelta(milliseconds=ms + days * 86400000)
             for ms, days in data
         ]
         # Combined datetime data
