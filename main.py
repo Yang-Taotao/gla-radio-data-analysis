@@ -15,7 +15,7 @@ from data_rstn_handler import (
 from data_plotter import (
     norp_plotter,
     rstn_plotter,
-    # combined_plotter,
+    combined_plotter,
 )
 # Data fitter import
 # from data_fitter import (
@@ -50,9 +50,9 @@ data_norp_fi_peak = norp_quiet_sun(data_norp_fi_valid)
 # Assign the peaktime of flux recording
 data_norp_peak_time = "2013-10-28 01:59:38"
 # Plot the NORP data
-data_norp_plot = norp_plotter(
-    data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq
-)
+# data_norp_plot = norp_plotter(
+#    data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq
+# )
 
 # Data repo - rstn - apl | phf
 # Deposit rstn arrays
@@ -70,8 +70,11 @@ data_apl_flux_peak, data_phf_flux_peak = rstn_quiet_sun(
 )
 
 # Plot the RSTN data
-#data_rstn_plot = rstn_plotter(
-#    data_apl_tim, data_phf_tim, data_apl_flux_peak, data_phf_flux_peak
-#)
+# data_rstn_plot = rstn_plotter(
+#     data_apl_tim, data_phf_tim, data_apl_flux_peak, data_phf_flux_peak, data_apl_freq, data_phf_freq
+# )
 
 # Combined plot
+# data_combined_plot = combined_plotter(
+#     data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_apl_tim, data_phf_tim, data_apl_flux_peak, data_phf_flux_peak
+# )
