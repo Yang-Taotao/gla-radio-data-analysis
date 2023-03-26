@@ -51,7 +51,7 @@ data_norp_fi_peak = norp_quiet_sun(data_norp_fi_valid)
 data_norp_peak_time = "2013-10-28 01:59:38"
 # Plot the NORP data
 data_norp_plot = norp_plotter(
-    data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time
+    data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq
 )
 
 # Data repo - rstn - apl | phf
