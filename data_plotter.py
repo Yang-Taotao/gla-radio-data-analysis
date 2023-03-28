@@ -55,43 +55,38 @@ def norp_plotter(
     return None
 
 
-# NORP log log plotter
+# NORP log log plotter - 100 index = 10 s
 def norp_log_plotter(
     data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq
 ):
+    # Gain peak value time array index
+    peak, peak_gap, gap = np.where(data_norp_tim_valid == data_norp_peak_time)[0][0], 300, 30
+
+    # Plot data range limiter at /pm 30s
+    peak_start, peak_end = (
+        max(0, peak - peak_gap),
+        min(data_norp_fi_peak.shape[0], peak + peak_gap),
+    )
+    
     # Plot with loops
     [
         plt.plot(
             data_norp_freq,
-            data_norp_fi_peak[i, :],
-            # label=data_norp_freq[i],
+            np.mean(data_norp_fi_peak[i:i+gap], axis=0), # Mean data calculator
+            label=data_norp_tim_valid[i],
         )
-        for i in range(data_norp_fi_peak.shape[1])
+        #for i in range(0, data_norp_fi_peak.shape[0], 100)
+        for i in range(peak_start, peak_end, gap) 
     ]
-
-    # Plotting for the peak value
-    # plt.axvline(x=data_norp_peak_time, color="crimson", linestyle="--")
-
-    # Gain peak value x-axis index
-    #peak = np.where(data_norp_tim_valid == data_norp_peak_time)[0][0]
-    # x_lim_left, x_lim_right = (
-    #     data_norp_tim_valid[peak - 2000],
-    #     data_norp_tim_valid[peak + 2000],
-    # )
-
-    # Ticks declutter
-    # plt.xticks(data_norp_tim_valid[::500], rotation=90, fontsize=10)
-
-    # Plot range limiter
-    # plt.xlim(x_lim_left, x_lim_right)
-    # plt.ylim(bottom=0)
-    plt.set_xscale('log')
-    plt.set_yscale('log')
+    
+    # Plot axis scale definer
+    plt.xscale('log')
+    plt.yscale('log')
 
     # Plot customizations
-    plt.xlabel("Time", fontsize=14)
+    plt.xlabel("NoRP frequencies", fontsize=14)
     plt.ylabel("Valid NoRP flux negating quiet sun", fontsize=14)
-    plt.title("NoRP quiet sun subtracted flux against time", fontsize=16)
+    plt.title("NORP quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
     plt.show()
     # Return func call
