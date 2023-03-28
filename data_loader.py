@@ -12,11 +12,11 @@ import numpy as np
 
 # CSV data parser
 def csv_loader(file_path, dtype=float):
-    '''
+    """
     Parameters
     ----------
     file_path : string
-        Path to file folder.
+        Path to data file folder.
     dtype : dtype, optional
         The dtype of assigned file. The default is float.
 
@@ -25,8 +25,8 @@ def csv_loader(file_path, dtype=float):
     data : array
         The data readout array.
 
-    '''
-    # Initial data load with specified dtype
+    """
+    # Initial CSV data load with specified dtype
     data = np.loadtxt(file_path, delimiter=",", dtype=dtype)
 
     # Time data loader and convertor
@@ -39,9 +39,7 @@ def csv_loader(file_path, dtype=float):
             for ms, days in data
         ]
         # Combined datetime data
-        data = np.array(
-            [dt.strftime("%Y-%m-%d %H:%M:%S") for dt in time_repo]
-        )
+        data = np.array([dt.strftime("%Y-%m-%d %H:%M:%S") for dt in time_repo])
         # Return converted time data array
         return data
     # Data loader for all other dtype
