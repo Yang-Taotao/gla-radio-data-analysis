@@ -47,7 +47,7 @@ def norp_plotter(
 
     # Plot customizations
     plt.xlabel("Time", fontsize=14)
-    plt.ylabel("Valid flux negating quiet sun", fontsize=14)
+    plt.ylabel("Valid NoRP flux negating quiet sun", fontsize=14)
     plt.title("NoRP quiet sun subtracted flux against time", fontsize=16)
     plt.legend(fontsize=10)
     plt.show()
@@ -87,7 +87,7 @@ def rstn_plotter(
 
     # Plot customizations
     plt.xlabel("Time", fontsize=14)
-    plt.ylabel("Valid flux negating quiet sun", fontsize=14)
+    plt.ylabel("Valid RSTN flux negating quiet sun", fontsize=14)
     plt.title("RSTN quiet sun subtracted flux again time", fontsize=16)
     plt.legend(fontsize=10)
     plt.show()
