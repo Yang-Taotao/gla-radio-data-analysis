@@ -14,7 +14,7 @@ import scienceplots
 plt.style.use(["science", "notebook", "grid"])
 
 # Plotters
-# NORP plotter
+# NORP plotter - flux vs time at each freq
 def norp_plotter(
     data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq
 ):
@@ -55,7 +55,7 @@ def norp_plotter(
     return None
 
 
-# NORP log log plotter - 100 index = 10 s
+# NORP log log plotter - flux vs freq at each time - 100 index = 10 s
 def norp_log_plotter(
     data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq
 ):

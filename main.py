@@ -16,7 +16,6 @@ from data_rstn_handler import (
     rstn_loader,
     rstn_quiet_sun,
 )
-
 # Data plotter import
 from data_plotter import (
     norp_plotter,
@@ -24,7 +23,6 @@ from data_plotter import (
     rstn_plotter,
     combined_plotter,
 )
-
 # Data fitter import
 # from data_fitter import (
 # gyro_fitter,
@@ -64,8 +62,13 @@ data_norp_peak_time = "2013-10-28 01:59:38"
 #     data_norp_peak_time,
 #     data_norp_freq,
 # )
-
-norp_log_plotter(data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq)
+# Plot log-log plot of NORP data
+norp_log_plotter(
+    data_norp_tim_valid, 
+    data_norp_fi_peak, 
+    data_norp_peak_time, 
+    data_norp_freq,
+)
 
 # Data repo - rstn - apl | phf
 # Deposit rstn arrays
