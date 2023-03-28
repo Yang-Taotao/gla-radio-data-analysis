@@ -9,8 +9,6 @@ Created on Wed Mar 15 2023
 # %% Library import
 # Library import
 # Data handler import
-# from data_norp_handler import norp_loader, norp_quiet_sun, norp_filter
-# from data_rstn_handler import rstn_loader, rstn_quiet_sun
 from data_handler import data_loader, data_filter, quiet_sun
 
 # Data plotter import
@@ -32,22 +30,24 @@ norp_peak_time = "2013-10-28 01:59:38"
 # Data repo
 # Deposit data arrays
 (
-    norp_fi, 
-    norp_freq, 
-    norp_mvd, 
-    norp_tim, 
-    apl_flux, 
-    apl_freq, 
-    apl_tim, 
-    phf_flux, 
-    phf_freq, 
-    phf_tim
+    norp_fi,
+    norp_freq,
+    norp_mvd,
+    norp_tim,
+    apl_flux,
+    apl_freq,
+    apl_tim,
+    phf_flux,
+    phf_freq,
+    phf_tim,
 ) = data_loader(norp_path, apl_path, phf_path)
 # Deposit norp validity filtered arrays
 norp_tim_valid, norp_fi_valid = data_filter(norp_mvd, norp_tim, norp_fi)
 # Deposit quiet sun result
 norp_fi_peak, apl_flux_peak, phf_flux_peak = (
-    quiet_sun(norp_fi_valid), quiet_sun(apl_flux), quiet_sun(phf_flux),
+    quiet_sun(norp_fi_valid),
+    quiet_sun(apl_flux),
+    quiet_sun(phf_flux),
 )
 
 # %% Plotter
