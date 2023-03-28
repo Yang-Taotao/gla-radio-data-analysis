@@ -71,4 +71,3 @@ def norp_log_plotter(
     plt.legend(fontsize=10)
     plt.show()
     # Return func call
-    return plot

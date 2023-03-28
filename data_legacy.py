@@ -51,8 +51,6 @@ def norp_plotter(
     plt.title("NoRP quiet sun subtracted flux against time", fontsize=16)
     plt.legend(fontsize=10)
     plt.show()
-    # Return func call
-    return None
 
 
 # RSTN plotter - preliminary
@@ -91,8 +89,6 @@ def rstn_plotter(
     plt.title("RSTN quiet sun subtracted flux again time", fontsize=16)
     plt.legend(fontsize=10)
     plt.show()
-    # Return func call
-    return None
 
 
 # Combined plotter - preliminary
@@ -130,4 +126,3 @@ def combined_plotter(
     plt.ylabel("Valid flux negating quiet sun", fontsize=14)
     plt.title("Quiet sun subtracted flux again time", fontsize=16)
     plt.show()
-    return None
