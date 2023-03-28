@@ -14,7 +14,7 @@ import scienceplots
 plt.style.use(["science", "notebook", "grid"])
 
 # Plotters
-# NORP plotter - Pending peak time plot and further customization
+# NORP plotter
 def norp_plotter(
     data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq
 ):
@@ -44,6 +44,49 @@ def norp_plotter(
     # Plot range limiter
     plt.xlim(x_lim_left, x_lim_right)
     plt.ylim(bottom=0)
+
+    # Plot customizations
+    plt.xlabel("Time", fontsize=14)
+    plt.ylabel("Valid NoRP flux negating quiet sun", fontsize=14)
+    plt.title("NoRP quiet sun subtracted flux against time", fontsize=16)
+    plt.legend(fontsize=10)
+    plt.show()
+    # Return func call
+    return None
+
+
+# NORP log log plotter
+def norp_log_plotter(
+    data_norp_tim_valid, data_norp_fi_peak, data_norp_peak_time, data_norp_freq
+):
+    # Plot with loops
+    [
+        plt.plot(
+            data_norp_freq,
+            data_norp_fi_peak[i, :],
+            # label=data_norp_freq[i],
+        )
+        for i in range(data_norp_fi_peak.shape[1])
+    ]
+
+    # Plotting for the peak value
+    # plt.axvline(x=data_norp_peak_time, color="crimson", linestyle="--")
+
+    # Gain peak value x-axis index
+    #peak = np.where(data_norp_tim_valid == data_norp_peak_time)[0][0]
+    # x_lim_left, x_lim_right = (
+    #     data_norp_tim_valid[peak - 2000],
+    #     data_norp_tim_valid[peak + 2000],
+    # )
+
+    # Ticks declutter
+    # plt.xticks(data_norp_tim_valid[::500], rotation=90, fontsize=10)
+
+    # Plot range limiter
+    # plt.xlim(x_lim_left, x_lim_right)
+    # plt.ylim(bottom=0)
+    plt.set_xscale('log')
+    plt.set_yscale('log')
 
     # Plot customizations
     plt.xlabel("Time", fontsize=14)
