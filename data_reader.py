@@ -9,7 +9,6 @@ Created on Wed Mar 15 2023
 import datetime as dt
 import numpy as np
 
-
 # CSV data parser
 def csv_loader(file_path, dtype=float):
     """

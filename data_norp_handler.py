@@ -7,7 +7,7 @@ Created on Wed Mar 15 2023
 """
 # Library import
 import numpy as np
-from data_loader import csv_loader
+from data_reader import csv_loader
 
 # NORP data loader
 def norp_loader(data_norp_path):

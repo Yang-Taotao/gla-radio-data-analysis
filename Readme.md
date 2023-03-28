@@ -28,12 +28,11 @@ We will perform the tasks with the following steps:
 Main file:
 - main.py               ## The master script
 
-Data loader modules:
-- data_loader.py        ## To load csv files
+Data reader modules:
+- data_reader.py        ## To load csv files
 
 Data processing modules:
-- data_norp_handler.py  ## To handle files related to NoRP data
-- data_rstn_handler.py  ## To handle files related to RSTN data
+- data_handler.py  ## To handle data files
 
 Data fitter modules:
 - data_fitter.py        ## To fit the data to assigned model
