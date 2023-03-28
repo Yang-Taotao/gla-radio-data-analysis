@@ -12,13 +12,10 @@ Created on Wed Mar 15 2023
 from data_handler import data_loader, data_filter, quiet_sun
 
 # Data plotter import
-from data_plotter import norp_log_plotter
+from data_plotter import generator
 
 # Data fitter import
-# from data_fitter import (
-# gyro_fitter,
-# plas_fitter,
-# )
+# from data_fitter import gyro_fitter, plas_fitter
 
 # %% Data repo
 # Data path repo
@@ -44,7 +41,7 @@ norp_peak_time = "2013-10-28 01:59:38"
 # Deposit norp validity filtered arrays
 norp_tim_valid, norp_fi_valid = data_filter(norp_mvd, norp_tim, norp_fi)
 # Deposit quiet sun result
-norp_fi_peak, apl_flux_peak, phf_flux_peak = (
+norp_fi_peak, apl_fi_peak, phf_fi_peak = (
     quiet_sun(norp_fi_valid),
     quiet_sun(apl_flux),
     quiet_sun(phf_flux),
@@ -52,23 +49,18 @@ norp_fi_peak, apl_flux_peak, phf_flux_peak = (
 
 # %% Plotter
 # Plot log-log plot of NORP data
-norp_log_plotter(norp_tim_valid, norp_fi_peak, norp_peak_time, norp_freq)
-
-# %% Unused plotter resource - legacy plots
-# Unused code repository - original plot ideas
-# Plot the NORP data
-# norp_plotter(norp_tim_valid, norp_fi_peak, norp_peak_time, norp_freq)
-
-# Plot the RSTN data
-# rstn_plotter(apl_tim, phf_tim, apl_flux_peak, phf_flux_peak, apl_freq)
-
-# Combined plot
-# combined_plotter(
-#    norp_tim_valid,
-#    norp_fi_peak,
-#    norp_peak_time,
-#    apl_tim,
-#    phf_tim,
-#    apl_flux_peak,
-#    phf_flux_peak,
-# )
+# norp_log_plotter(norp_tim_valid, norp_fi_peak, norp_freq, norp_peak_time)
+# rstn_log_plotter(apl_tim, phf_tim, apl_fi_peak, phf_fi_peak, apl_freq, phf_freq, norp_peak_time)
+arg1, arg2 = (
+    (norp_tim_valid, norp_fi_peak, norp_freq, norp_peak_time),
+    (
+        apl_tim,
+        phf_tim,
+        apl_fi_peak,
+        phf_fi_peak,
+        apl_freq,
+        phf_freq,
+        norp_peak_time,
+    ),
+)
+generator(arg1, arg2)
