@@ -32,7 +32,7 @@ Data reader modules:
 - data_reader.py        ## To load csv files
 
 Data processing modules:
-- data_handler.py  ## To handle data files
+- data_handler.py       ## To handle data files
 
 Data fitter modules:
 - data_fitter.py        ## To fit the data to assigned model
