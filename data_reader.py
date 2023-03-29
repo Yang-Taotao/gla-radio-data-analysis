@@ -30,15 +30,15 @@ def csv_loader(file_path, dtype=float):
 
     # Time data loader and convertor
     if dtype == np.uint64:
-        # Define start point of datetime as day01
-        time_base = dt.datetime(1979, 1, 1) - dt.timedelta(days=1)
+        # Define start point of datetime at 1979-01-01 as day01
+        time_origin = dt.datetime(1979, 1, 1) - dt.timedelta(days=1)
         # Construct time function for calculating time result
-        time_repo = [
-            time_base + dt.timedelta(milliseconds=ms + days * 86400000)
+        time_update = [
+            time_origin + dt.timedelta(milliseconds=ms + days * 86400000)
             for ms, days in data
         ]
         # Combined datetime data
-        data = np.array([dt.strftime("%Y-%m-%d %H:%M:%S") for dt in time_repo])
+        data = np.array([time.strftime("%Y-%m-%d %H:%M:%S") for time in time_update])
         # Return converted time data array
         return data
     # Data loader for all other dtype
