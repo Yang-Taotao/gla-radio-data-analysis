@@ -51,7 +51,7 @@ norp_fi_peak, apl_fi_peak, phf_fi_peak = (
 # Plot log-log plot of NORP data
 # norp_log_plotter(norp_tim_valid, norp_fi_peak, norp_freq, norp_peak_time)
 # rstn_log_plotter(apl_tim, phf_tim, apl_fi_peak, phf_fi_peak, apl_freq, phf_freq, norp_peak_time)
-arg1, arg2 = (
+arg1, arg2, arg3 = (
     (norp_tim_valid, norp_fi_peak, norp_freq, norp_peak_time),
     (
         apl_tim,
@@ -62,5 +62,17 @@ arg1, arg2 = (
         phf_freq,
         norp_peak_time,
     ),
+    (
+        norp_tim_valid, 
+        apl_tim,
+        phf_tim,
+        norp_fi_peak,
+        apl_fi_peak,
+        phf_fi_peak,
+        norp_freq, 
+        apl_freq,
+        phf_freq,
+        norp_peak_time,
+    ),
 )
-generator(arg1, arg2)
+generator(arg1, arg2, arg3)
