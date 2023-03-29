@@ -35,7 +35,7 @@ def csv_loader(file_path, dtype=float):
         # Construct time function for calculating time result
         time_update = [
             time_origin + dt.timedelta(milliseconds=ms + days * 86400000)
-            for ms, days in data
+            for ms, days in data # col0, col1: ms, days
         ]
         # Combined datetime data
         data = np.array([time.strftime("%Y-%m-%d %H:%M:%S") for time in time_update])
