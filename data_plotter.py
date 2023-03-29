@@ -19,14 +19,8 @@ def norp_log_plotter(arg):
     """
     Parameters
     ----------
-    data_norp_tim_valid : array
-        Valid time array of NoRP data.
-    data_norp_fi_peak : array
-        Quiet sun flux array of NoRP data.
-    data_norp_freq : array
-        Freq array of NoRP data.
-    data_norp_peak_time : string
-        Peak time string.
+    arg : tuple
+        Plotter argument parameters.
 
     Returns
     -------
@@ -39,18 +33,19 @@ def norp_log_plotter(arg):
         data_norp_freq,
         data_norp_peak_time,
     ) = [arg[i] for i in range(len(arg))]
-    
+
     # Plot range limiter
     # Gain peak value time array index
-    peak, peak_gap, gap = (
-        np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],
-        300,
-        100,
+    peak = (
+        np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],  # peak
+        300,  # peak_gap
+        100,  # gap
     )
     # Plot data range limiter at +- 30s
-    peak_start, peak_end = (
-        max(0, peak - peak_gap),
-        min(data_norp_fi_peak.shape[0], peak + peak_gap),
+    # Structure - (peak_start, peak_end)
+    peak_idx = (
+        max(0, peak[0] - peak[1]),  # peak_start
+        min(data_norp_fi_peak.shape[0], peak[0] + peak[1]),  # peak_end
     )
 
     # Plot with loops
@@ -58,12 +53,11 @@ def norp_log_plotter(arg):
         plt.plot(
             data_norp_freq,
             np.mean(
-                data_norp_fi_peak[i : i + gap], axis=0
+                data_norp_fi_peak[i : i + peak[2]], axis=0
             ),  # Mean data calculator
             label=data_norp_tim_valid[i],
         )
-        # for i in range(0, data_norp_fi_peak.shape[0], 100)
-        for i in range(peak_start, peak_end, gap)
+        for i in range(peak_idx[0], peak_idx[1], peak[2])
     ]
 
     # Plot axis scale definer
@@ -84,20 +78,8 @@ def rstn_log_plotter(arg):
     """
     Parameters
     ----------
-    data_apl_tim : array
-        Time array of apl of RSTN data.
-    data_phf_tim : array
-        Time array of phf of RSTN data.
-    data_apl_fi_peak : array
-        Quiet sun flux array of apl of RSTN data.
-    data_phf_fi_peak : array
-        Quiet sun flux array of apl of RSTN data.
-    data_apl_freq : array
-        Freq array of apl of RSTN data.
-    data_phf_freq : array
-        Freq array of apl of RSTN data.
-    data_norp_peak_time : string
-        Peak time indicator string from NoRP data.
+    arg : tuple
+        Plotter argument parameters.
 
     Returns
     -------
@@ -116,18 +98,18 @@ def rstn_log_plotter(arg):
 
     # Plot range limiter
     # Gain peak value time array index
-    peak_apl, peak_phf, peak_gap, gap = (
-        np.where(data_apl_tim == data_norp_peak_time)[0][0],
-        np.where(data_phf_tim == data_norp_peak_time)[0][0],
-        30,
-        15,
+    peak = (
+        np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
+        np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
+        30,  # peak_gap
+        15,  # gap
     )
     # Plot data range limiter at +- 30s
-    peak_apl_start, peak_apl_end, peak_phf_start, peak_phf_end = (
-        max(0, peak_apl - peak_gap),
-        min(data_apl_fi_peak.shape[0], peak_apl + peak_gap),
-        max(0, peak_phf - peak_gap),
-        min(data_phf_fi_peak.shape[0], peak_phf + peak_gap),
+    peak_idx = (
+        max(0, peak[0] - peak[2]),  # peak_apl_start
+        min(data_apl_fi_peak.shape[0], peak[0] + peak[2]),  # peak_apl_end
+        max(0, peak[1] - peak[2]),  # peak_phf_start
+        min(data_phf_fi_peak.shape[0], peak[1] + peak[2]),  # peak_phf_end
     )
 
     # Plot generation
@@ -136,24 +118,22 @@ def rstn_log_plotter(arg):
         plt.plot(
             data_apl_freq,
             np.mean(
-                data_apl_fi_peak[i : i + gap], axis=0
+                data_apl_fi_peak[i : i + peak[3]], axis=0
             ),  # Mean data calculator
             label=data_apl_tim[i],
         )
-        # for i in range(0, data_norp_fi_peak.shape[0], 100)
-        for i in range(peak_apl_start, peak_apl_end, gap)
+        for i in range(peak_idx[0], peak_idx[1], peak[3])
     ]
     # Plot phf with loops
     [
         plt.plot(
             data_phf_freq,
             np.mean(
-                data_phf_fi_peak[i : i + gap], axis=0
+                data_phf_fi_peak[i : i + peak[3]], axis=0
             ),  # Mean data calculator
             label=data_phf_tim[i],
         )
-        # for i in range(0, data_norp_fi_peak.shape[0], 100)
-        for i in range(peak_phf_start, peak_phf_end, gap)
+        for i in range(peak_idx[2], peak_idx[3], peak[3])
     ]
 
     # Plot axis scale definer
@@ -174,31 +154,12 @@ def log_plotter(arg):
     """
     Parameters
     ----------
-    data_norp_tim_valid : array
-        Valid time array of NoRP data.
-    data_apl_tim : array
-        Time array of apl of RSTN data.
-    data_phf_tim : array
-        Time array of phf of RSTN data.
-    data_norp_fi_peak : array
-        Quiet sun flux array of NoRP data.
-    data_apl_fi_peak : array
-        Quiet sun flux array of apl of RSTN data.
-    data_phf_fi_peak : array
-        Quiet sun flux array of apl of RSTN data.
-    data_norp_freq : array
-        Freq array of NoRP data.
-    data_apl_freq : array
-        Freq array of apl of RSTN data.
-    data_phf_freq : array
-        Freq array of apl of RSTN data.
-    data_norp_peak_time : string
-        Peak time indicator string from NoRP data.
+    arg : tuple
+        Plotter argument parameters.
 
     Returns
     -------
     None.
-
     """
     # Local variable repo
     (
@@ -216,32 +177,23 @@ def log_plotter(arg):
 
     # Plot range limiter
     # Gain peak value time array index
-    peak, peak_apl, peak_phf = (
-        np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],
-        np.where(data_apl_tim == data_norp_peak_time)[0][0],
-        np.where(data_phf_tim == data_norp_peak_time)[0][0],
-    )
-    peak_norp_gap, peak_rstn_gap, gap_norp, gap_rstn = (
-        300,
-        30,
-        100,
-        10,
+    peak = (
+        np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],  # peak
+        np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
+        np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
+        300,  # peak_norp_gap
+        30,  # peak_rstn_gap
+        100,  # gap_norp
+        10,  # gap_rstn
     )
     # Plot data range limiter at +- 30s
-    (
-        peak_start,
-        peak_end,
-        peak_apl_start,
-        peak_apl_end,
-        peak_phf_start,
-        peak_phf_end,
-    ) = (
-        max(0, peak - peak_norp_gap),
-        min(data_norp_fi_peak.shape[0], peak + peak_norp_gap),
-        max(0, peak_apl - peak_rstn_gap),
-        min(data_apl_fi_peak.shape[0], peak_apl + peak_rstn_gap),
-        max(0, peak_phf - peak_rstn_gap),
-        min(data_phf_fi_peak.shape[0], peak_phf + peak_rstn_gap),
+    peak_idx = (
+        max(0, peak[0] - peak[3]),  # peak_start
+        min(data_norp_fi_peak.shape[0], peak[0] + peak[3]),  # peak_end
+        max(0, peak[1] - peak[4]),  # peak_apl_start
+        min(data_apl_fi_peak.shape[0], peak[1] + peak[4]),  # peak_apl_end
+        max(0, peak[2] - peak[4]),  # peak_phf_start
+        min(data_phf_fi_peak.shape[0], peak[2] + peak[4]),  # peak_phf_end
     )
 
     # Plot generation
@@ -250,36 +202,33 @@ def log_plotter(arg):
         plt.plot(
             data_norp_freq,
             np.mean(
-                data_norp_fi_peak[i : i + gap_norp], axis=0
+                data_norp_fi_peak[i : i + peak[5]], axis=0
             ),  # Mean data calculator
             label=data_norp_tim_valid[i],
         )
-        # for i in range(0, data_norp_fi_peak.shape[0], 100)
-        for i in range(peak_start, peak_end, gap_norp)
+        for i in range(peak_idx[0], peak_idx[1], peak[5])
     ]
     # Plot apl with loops
     [
         plt.plot(
             data_apl_freq,
             np.mean(
-                data_apl_fi_peak[i : i + gap_rstn], axis=0
+                data_apl_fi_peak[i : i + peak[6]], axis=0
             ),  # Mean data calculator
             label=data_apl_tim[i],
         )
-        # for i in range(0, data_norp_fi_peak.shape[0], 100)
-        for i in range(peak_apl_start, peak_apl_end, gap_rstn)
+        for i in range(peak_idx[2], peak_idx[3], peak[6])
     ]
     # Plot phf with loops
     [
         plt.plot(
             data_phf_freq,
             np.mean(
-                data_phf_fi_peak[i : i + gap_rstn], axis=0
+                data_phf_fi_peak[i : i + peak[6]], axis=0
             ),  # Mean data calculator
             label=data_phf_tim[i],
         )
-        # for i in range(0, data_norp_fi_peak.shape[0], 100)
-        for i in range(peak_phf_start, peak_phf_end, gap_rstn)
+        for i in range(peak_idx[4], peak_idx[5], peak[6])
     ]
 
     # Plot axis scale definer
@@ -301,16 +250,18 @@ def generator(arg1, arg2, arg3):
     Parameters
     ----------
     arg1 : tuple
-        Argument for function 1.
+        Argument for NoRP plotter.
     arg2 : tuple
-        Argument for function 2.
+        Argument for RSTN plotter.
+    arg3 : tuple
+        Argument for Combined plotter.
 
     Returns
     -------
     result :
         The function calls.
     """
-    # Parse plotter arguments 
+    # Parse plotter arguments
     result = (
         norp_log_plotter(arg1),
         rstn_log_plotter(arg2),

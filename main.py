@@ -7,7 +7,6 @@ Created on Wed Mar 15 2023
 @author: Yang-Taotao
 """
 # %% Library import
-# Library import
 # Data handler import
 from data_handler import data_loader, data_filter, quiet_sun
 
@@ -17,14 +16,13 @@ from data_plotter import generator
 # Data fitter import
 # from data_fitter import gyro_fitter, plas_fitter
 
-# %% Data repo
-# Data path repo
+# %% Key data assignment
 # Assign norp, apl, and phf file path
 norp_path, apl_path, phf_path = ("./data/norp/", "./data/apl/", "./data/phf/")
 # Assign the peaktime of flux recording
 norp_peak_time = "2013-10-28 01:59:38"
 
-# Data repo
+# %% Data repo
 # Deposit data arrays
 (
     norp_fi,
@@ -47,14 +45,11 @@ norp_fi_peak, apl_fi_peak, phf_fi_peak = (
     quiet_sun(phf_flux),
 )
 
-# %% Plotter
+# %% Plotter argument assignment
 # Plot arguments assignment
 arg1, arg2, arg3 = (
     # NoRP plotter arguments
-    (norp_tim_valid, 
-     norp_fi_peak, 
-     norp_freq, 
-     norp_peak_time),
+    (norp_tim_valid, norp_fi_peak, norp_freq, norp_peak_time),
     # RSTN plotter arguments
     (
         apl_tim,
@@ -79,5 +74,7 @@ arg1, arg2, arg3 = (
         norp_peak_time,
     ),
 )
+
+# %% Plot generation
 # Generate plot with function calls
 generator(arg1, arg2, arg3)
