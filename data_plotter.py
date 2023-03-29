@@ -40,7 +40,6 @@ def norp_log_plotter(
         300,
         100,
     )
-
     # Plot data range limiter at +- 30s
     peak_start, peak_end = (
         max(0, peak - peak_gap),
