@@ -16,7 +16,10 @@ plt.style.use(["science", "notebook", "grid"])
 # Plotters
 # NORP log log plotter - flux vs freq at each time - 100 index = 10 s
 def norp_log_plotter(
-    data_norp_tim_valid, data_norp_fi_peak, data_norp_freq, data_norp_peak_time
+    data_norp_tim_valid,
+    data_norp_fi_peak,
+    data_norp_freq,
+    data_norp_peak_time,
 ):
     """
     Parameters
@@ -159,17 +162,46 @@ def rstn_log_plotter(
 
 # Combined plotter
 def log_plotter(
-    data_norp_tim_valid, 
+    data_norp_tim_valid,
     data_apl_tim,
     data_phf_tim,
     data_norp_fi_peak,
     data_apl_fi_peak,
     data_phf_fi_peak,
-    data_norp_freq, 
+    data_norp_freq,
     data_apl_freq,
     data_phf_freq,
     data_norp_peak_time,
 ):
+    """
+    Parameters
+    ----------
+    data_norp_tim_valid : array
+        Valid time array of NoRP data.
+    data_apl_tim : array
+        Time array of apl of RSTN data.
+    data_phf_tim : array
+        Time array of phf of RSTN data.
+    data_norp_fi_peak : array
+        Quiet sun flux array of NoRP data.
+    data_apl_fi_peak : array
+        Quiet sun flux array of apl of RSTN data.
+    data_phf_fi_peak : array
+        Quiet sun flux array of apl of RSTN data.
+    data_norp_freq : array
+        Freq array of NoRP data.
+    data_apl_freq : array
+        Freq array of apl of RSTN data.
+    data_phf_freq : array
+        Freq array of apl of RSTN data.
+    data_norp_peak_time : string
+        Peak time indicator string from NoRP data.
+
+    Returns
+    -------
+    None.
+
+    """
     # Plot range calculator
     # Plot range limiter
     peak, peak_apl, peak_phf = (
@@ -185,7 +217,14 @@ def log_plotter(
         10,
     )
     # Plot x-axis range limiter
-    peak_start, peak_end, peak_apl_start, peak_apl_end, peak_phf_start, peak_phf_end = (
+    (
+        peak_start,
+        peak_end,
+        peak_apl_start,
+        peak_apl_end,
+        peak_phf_start,
+        peak_phf_end,
+    ) = (
         max(0, peak - peak_norp_gap),
         min(data_norp_fi_peak.shape[0], peak + peak_norp_gap),
         max(0, peak_apl - peak_rstn_gap),
@@ -193,7 +232,7 @@ def log_plotter(
         max(0, peak_phf - peak_rstn_gap),
         min(data_phf_fi_peak.shape[0], peak_phf + peak_rstn_gap),
     )
-    
+
     # Plot generation
     # Plot norp with loops
     [
@@ -244,6 +283,7 @@ def log_plotter(
     plt.savefig("figure_combined.png")
     plt.show()
 
+
 # Plot parser
 def generator(arg1, arg2, arg3):
     """
@@ -260,6 +300,10 @@ def generator(arg1, arg2, arg3):
         The function calls.
     """
     # Parse arguments with unpacking
-    result = norp_log_plotter(*arg1), rstn_log_plotter(*arg2), log_plotter(*arg3)
+    result = (
+        norp_log_plotter(*arg1),
+        rstn_log_plotter(*arg2),
+        log_plotter(*arg3),
+    )
     # Plotter results return
     return result

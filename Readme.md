@@ -1,7 +1,7 @@
 ## Radio data analysis
 This is a course project for *ASTRO-5010* at *University of Glasgow*.
 - Drafted: Mar 15, 2023
-- Editted: Mar 26, 2023
+- Editted: Mar 29, 2023
 
 ## Data set
 We employ the data obtained from:
@@ -24,7 +24,7 @@ We will perform the tasks with the following steps:
 7. Fit gyrosynchrotron emission
 8. Fit plasma emission
 
-## File structure
+## Working file structure
 Main file:
 - main.py               ## The master script
 
@@ -40,5 +40,9 @@ Data fitter modules:
 Plotter modules:
 - data_plotter.py       ## To plot figures
 
+## Supplementary files
 Readme:
 - Readme.md             ## Simple readme file
+
+Legacy repo:
+- data_legacy.py        ## Legacy plotters
