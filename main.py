@@ -48,11 +48,14 @@ norp_fi_peak, apl_fi_peak, phf_fi_peak = (
 )
 
 # %% Plotter
-# Plot log-log plot of NORP data
-# norp_log_plotter(norp_tim_valid, norp_fi_peak, norp_freq, norp_peak_time)
-# rstn_log_plotter(apl_tim, phf_tim, apl_fi_peak, phf_fi_peak, apl_freq, phf_freq, norp_peak_time)
+# Plot arguments assignment
 arg1, arg2, arg3 = (
-    (norp_tim_valid, norp_fi_peak, norp_freq, norp_peak_time),
+    # NoRP plotter arguments
+    (norp_tim_valid, 
+     norp_fi_peak, 
+     norp_freq, 
+     norp_peak_time),
+    # RSTN plotter arguments
     (
         apl_tim,
         phf_tim,
@@ -62,6 +65,7 @@ arg1, arg2, arg3 = (
         phf_freq,
         norp_peak_time,
     ),
+    # Combined plotter arguments
     (
         norp_tim_valid,
         apl_tim,
@@ -75,4 +79,5 @@ arg1, arg2, arg3 = (
         norp_peak_time,
     ),
 )
+# Generate plot with function calls
 generator(arg1, arg2, arg3)

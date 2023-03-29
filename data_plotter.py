@@ -15,12 +15,7 @@ plt.style.use(["science", "notebook", "grid"])
 
 # Plotters
 # NORP log log plotter - flux vs freq at each time - 100 index = 10 s
-def norp_log_plotter(
-    data_norp_tim_valid,
-    data_norp_fi_peak,
-    data_norp_freq,
-    data_norp_peak_time,
-):
+def norp_log_plotter(arg):
     """
     Parameters
     ----------
@@ -37,6 +32,15 @@ def norp_log_plotter(
     -------
     None.
     """
+    # Local variable repo
+    (
+        data_norp_tim_valid,
+        data_norp_fi_peak,
+        data_norp_freq,
+        data_norp_peak_time,
+    ) = [arg[i] for i in range(len(arg))]
+    
+    # Plot range limiter
     # Gain peak value time array index
     peak, peak_gap, gap = (
         np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],
@@ -71,20 +75,12 @@ def norp_log_plotter(
     plt.ylabel("Valid NoRP quiet sun filtered flux", fontsize=14)
     plt.title("NoRP quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
-    plt.savefig("figure_norp.png")
+    plt.savefig("./media/figure_norp.png")
     plt.show()
 
 
 # RSTN log log plotter - flux vs freq at each time - 200 index = 190 s
-def rstn_log_plotter(
-    data_apl_tim,
-    data_phf_tim,
-    data_apl_fi_peak,
-    data_phf_fi_peak,
-    data_apl_freq,
-    data_phf_freq,
-    data_norp_peak_time,
-):
+def rstn_log_plotter(arg):
     """
     Parameters
     ----------
@@ -107,13 +103,26 @@ def rstn_log_plotter(
     -------
     None.
     """
+    # Local variable repo
+    (
+        data_apl_tim,
+        data_phf_tim,
+        data_apl_fi_peak,
+        data_phf_fi_peak,
+        data_apl_freq,
+        data_phf_freq,
+        data_norp_peak_time,
+    ) = [arg[i] for i in range(len(arg))]
+
     # Plot range limiter
+    # Gain peak value time array index
     peak_apl, peak_phf, peak_gap, gap = (
         np.where(data_apl_tim == data_norp_peak_time)[0][0],
         np.where(data_phf_tim == data_norp_peak_time)[0][0],
         30,
         15,
     )
+    # Plot data range limiter at +- 30s
     peak_apl_start, peak_apl_end, peak_phf_start, peak_phf_end = (
         max(0, peak_apl - peak_gap),
         min(data_apl_fi_peak.shape[0], peak_apl + peak_gap),
@@ -156,23 +165,12 @@ def rstn_log_plotter(
     plt.ylabel("Valid RSTN quiet sun filtered flux", fontsize=14)
     plt.title("RSTN quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
-    plt.savefig("figure_rstn.png")
+    plt.savefig("./media/figure_rstn.png")
     plt.show()
 
 
 # Combined plotter
-def log_plotter(
-    data_norp_tim_valid,
-    data_apl_tim,
-    data_phf_tim,
-    data_norp_fi_peak,
-    data_apl_fi_peak,
-    data_phf_fi_peak,
-    data_norp_freq,
-    data_apl_freq,
-    data_phf_freq,
-    data_norp_peak_time,
-):
+def log_plotter(arg):
     """
     Parameters
     ----------
@@ -202,21 +200,34 @@ def log_plotter(
     None.
 
     """
-    # Plot range calculator
+    # Local variable repo
+    (
+        data_norp_tim_valid,
+        data_apl_tim,
+        data_phf_tim,
+        data_norp_fi_peak,
+        data_apl_fi_peak,
+        data_phf_fi_peak,
+        data_norp_freq,
+        data_apl_freq,
+        data_phf_freq,
+        data_norp_peak_time,
+    ) = [arg[i] for i in range(len(arg))]
+
     # Plot range limiter
+    # Gain peak value time array index
     peak, peak_apl, peak_phf = (
         np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],
         np.where(data_apl_tim == data_norp_peak_time)[0][0],
         np.where(data_phf_tim == data_norp_peak_time)[0][0],
     )
-    # Plot interval identifier
     peak_norp_gap, peak_rstn_gap, gap_norp, gap_rstn = (
         300,
         30,
         100,
         10,
     )
-    # Plot x-axis range limiter
+    # Plot data range limiter at +- 30s
     (
         peak_start,
         peak_end,
@@ -280,7 +291,7 @@ def log_plotter(
     plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
     plt.title("Combined quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
-    plt.savefig("figure_combined.png")
+    plt.savefig("./media/figure_combined.png")
     plt.show()
 
 
@@ -299,11 +310,11 @@ def generator(arg1, arg2, arg3):
     result :
         The function calls.
     """
-    # Parse arguments with unpacking
+    # Parse plotter arguments 
     result = (
-        norp_log_plotter(*arg1),
-        rstn_log_plotter(*arg2),
-        log_plotter(*arg3),
+        norp_log_plotter(arg1),
+        rstn_log_plotter(arg2),
+        log_plotter(arg3),
     )
     # Plotter results return
     return result
