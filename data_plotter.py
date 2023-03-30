@@ -38,10 +38,10 @@ def norp_log_plotter(arg):
     # Gain peak value time array index
     peak = (
         np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],  # peak
-        300,  # peak_gap
-        100,  # gap
+        600,  # peak_gap
+        200,  # gap
     )
-    # Plot data range limiter at +- 30s
+    # Plot data range limiter at +- 30s --> peak_gap >= 300
     # Structure - (peak_start, peak_end)
     peak_idx = (
         max(0, peak[0] - peak[1]),  # peak_start
@@ -101,8 +101,8 @@ def rstn_log_plotter(arg):
     peak = (
         np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
         np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
-        30,  # peak_gap
-        15,  # gap
+        60,  # peak_gap
+        30,  # gap
     )
     # Plot data range limiter at +- 30s
     peak_idx = (
