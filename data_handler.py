@@ -10,16 +10,12 @@ import numpy as np
 from data_reader import csv_loader
 
 # Combined data loader
-def data_loader(data_norp_path, data_apl_path, data_phf_path):
+def data_loader(data_path):
     """
     Parameters
     ----------
-    data_norp_path : string
-        Path to NORP data folder.
-    data_apl_path : string
-        Path to RSTN apl file folder.
-    data_phf_path : string
-        Path to RSTN phf file folder.
+    data_path : tuple
+        Tuple of data folder path.
 
     Returns
     -------
@@ -44,6 +40,8 @@ def data_loader(data_norp_path, data_apl_path, data_phf_path):
     data_phf_tim : array
         Time array of phf data of RSTN.
     """
+    # Local path variable repo
+    flux, freq, mvd, tim = ("flux.csv", "freq.csv", "mvd.csv", "tim.csv")
     # Load data
     (
         data_norp_fi,
@@ -57,16 +55,16 @@ def data_loader(data_norp_path, data_apl_path, data_phf_path):
         data_phf_freq,
         data_phf_tim,
     ) = (
-        csv_loader(data_norp_path + "fi.csv"),
-        csv_loader(data_norp_path + "freq.csv"),
-        csv_loader(data_norp_path + "mvd.csv", dtype=int),
-        csv_loader(data_norp_path + "tim.csv", dtype=np.uint64),
-        csv_loader(data_apl_path + "flux.csv").transpose(),
-        csv_loader(data_apl_path + "freq.csv"),
-        csv_loader(data_apl_path + "tim.csv", dtype=np.uint64),
-        csv_loader(data_phf_path + "flux.csv").transpose(),
-        csv_loader(data_phf_path + "freq.csv"),
-        csv_loader(data_phf_path + "tim.csv", dtype=np.uint64),
+        csv_loader(data_path[0] + flux),
+        csv_loader(data_path[0] + freq),
+        csv_loader(data_path[0] + mvd, dtype=int),
+        csv_loader(data_path[0] + tim, dtype=np.uint64),
+        csv_loader(data_path[1] + flux).transpose(),
+        csv_loader(data_path[1] + freq),
+        csv_loader(data_path[1] + tim, dtype=np.uint64),
+        csv_loader(data_path[2] + flux).transpose(),
+        csv_loader(data_path[2] + freq),
+        csv_loader(data_path[2] + tim, dtype=np.uint64),
     )
 
     # Return the assignment

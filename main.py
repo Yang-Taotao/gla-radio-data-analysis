@@ -18,7 +18,7 @@ from data_plotter import plot_generator
 
 # %% Key data assignment
 # Assign norp, apl, and phf file path
-norp_path, apl_path, phf_path = ("./data/norp/", "./data/apl/", "./data/phf/")
+data_path = ("./data/norp/", "./data/apl/", "./data/phf/")
 # Assign the peaktime of flux recording
 norp_peak_time = "2013-10-28 01:59:38"
 
@@ -35,7 +35,7 @@ norp_peak_time = "2013-10-28 01:59:38"
     phf_fi,
     phf_freq,
     phf_tim,
-) = data_loader(norp_path, apl_path, phf_path)
+) = data_loader(data_path)
 # Deposit norp validity filtered arrays
 norp_tim_valid, norp_fi_valid = data_filter(norp_mvd, norp_tim, norp_fi)
 # Deposit quiet sun result
