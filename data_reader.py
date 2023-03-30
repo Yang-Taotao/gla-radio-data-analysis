@@ -43,5 +43,6 @@ def csv_loader(file_path, dtype=float):
         )
         # Return converted time data array
         return data
+
     # Data loader for all other dtype
     return data
