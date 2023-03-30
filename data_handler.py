@@ -106,9 +106,11 @@ def data_filter(data_norp_mvd, data_norp_tim, data_norp_fi):
     # Generate valid data mask based on boolean readout over single rows
     data_norp_mask = np.all(data_norp_mvd.astype(bool), axis=1)
     # Filter the time and flux data through mask
-    data_norp_tim_valid = data_norp_tim[data_norp_mask]
-    data_norp_fi_valid = data_norp_fi[data_norp_mask]
-    # Return func call
+    data_norp_tim_valid, data_norp_fi_valid = (
+        data_norp_tim[data_norp_mask],
+        data_norp_fi[data_norp_mask],
+    )
+    # Return filtered result
     return (data_norp_tim_valid, data_norp_fi_valid)
 
 
@@ -129,5 +131,5 @@ def quiet_sun(data_array):
     data_fi_quiet = np.mean(data_array, axis=0)
     # Take out the quiet sun background from the valid flux values
     data_fi_peak = data_array - data_fi_quiet
-    # Return func call
+    # Return flux result with quiet sun subtracted
     return data_fi_peak
