@@ -8,7 +8,7 @@ Created on Wed Mar 15 2023
 """
 # %% Library import
 # Data handler import
-from data_handler import data_loader, data_filter, quiet_sun
+from data_handler import loader, filter, quiet_sun, collector
 
 # Data plotter import
 from data_plotter import plot_generator
@@ -35,9 +35,9 @@ norp_peak_time = "2013-10-28 01:59:38"
     phf_fi,
     phf_freq,
     phf_tim,
-) = data_loader(data_path)
+) = loader(data_path)
 # Deposit norp validity filtered arrays
-norp_tim_valid, norp_fi_valid = data_filter(norp_mvd, norp_tim, norp_fi)
+norp_tim_valid, norp_fi_valid = filter(norp_mvd, norp_tim, norp_fi)
 # Deposit quiet sun result
 norp_fi_peak, apl_fi_peak, phf_fi_peak = quiet_sun(
     (norp_fi_valid, apl_fi, phf_fi)
@@ -76,3 +76,9 @@ plt_arg1, plt_arg2, plt_arg3 = (
 # %% Plot generation
 # Generate plot with function calls
 plot_generator(plt_arg1, plt_arg2, plt_arg3)
+
+# %% Peak time array argument assignment
+peak_arg = (norp_tim_valid, apl_tim, phf_tim, norp_peak_time)
+
+# %% Peak time flux array repo
+fi_peak_time = collector(norp_fi_peak, apl_fi_peak, phf_fi_peak, peak_arg)

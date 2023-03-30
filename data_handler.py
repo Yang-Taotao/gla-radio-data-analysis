@@ -10,7 +10,7 @@ import numpy as np
 from data_reader import csv_loader
 
 # Combined data loader
-def data_loader(data_path):
+def loader(data_path):
     """
     Parameters
     ----------
@@ -83,7 +83,7 @@ def data_loader(data_path):
 
 
 # NORP data filter based on mvd file
-def data_filter(data_norp_mvd, data_norp_tim, data_norp_fi):
+def filter(data_norp_mvd, data_norp_tim, data_norp_fi):
     """
     Parameters
     ----------
@@ -156,27 +156,30 @@ def peak_time(arg):
         np.where(data_apl_tim == data_norp_peak_time)[0][0],
         np.where(data_phf_tim == data_norp_peak_time)[0][0],
     )
-    # Peak index repo
-    peak_idx = (idx_norp, idex_apl, idx_phf)
     # Return index repo
-    return peak_idx
+    return idx_norp, idex_apl, idx_phf
 
 
 # Peak time flux array collector
 def collector(data_norp_fi_peak, data_apl_fi_peak, data_phf_fi_peak, arg):
     # Import peak identifier result
-    idx_norp, idx_apl, idx_phf = [peak_time(arg)[i] for i in range(peak_time(arg))]
+    idx_norp, idx_apl, idx_phf = peak_time(arg)
     # Generate new peak time flux array
     data_norp_fi_peak_time, data_apl_fi_peak_time, data_phf_fi_peak_time = (
         data_norp_fi_peak[idx_norp],
         data_apl_fi_peak[idx_apl],
         data_phf_fi_peak[idx_phf],
     )
-    # Peak time flux array repo concatenator
-    data_combined_fi_peak_time = np.concatenate(
-        data_norp_fi_peak_time, 
-        data_apl_fi_peak_time, 
-        data_phf_fi_peak_time,
+    # Peak time flux array tuple generator
+    data_fi_peak_time = tuple(
+        [
+            data_norp_fi_peak_time, 
+            data_apl_fi_peak_time, 
+            data_phf_fi_peak_time,
+        ]
     )
+    # Peak time flux array generator
+    data_fi_peak_time_combined = np.concatenate(data_fi_peak_time)
+    print(data_fi_peak_time_combined)
     # Return combined peak time flux array
-    return data_combined_fi_peak_time
+    return data_fi_peak_time_combined
