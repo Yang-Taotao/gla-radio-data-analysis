@@ -39,7 +39,7 @@ def norp_log_plotter(arg):
     peak = (
         np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],  # peak
         600,  # peak_gap
-        200,  # gap
+        300,  # gap
     )
     # Plot data range limiter at +- 30s --> peak_gap >= 300
     # Structure - (peak_start, peak_end)
@@ -181,10 +181,10 @@ def log_plotter(arg):
         np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],  # peak
         np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
         np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
-        300,  # peak_norp_gap
-        30,  # peak_rstn_gap
-        100,  # gap_norp
-        10,  # gap_rstn
+        600,  # peak_norp_gap
+        60,  # peak_rstn_gap
+        300,  # gap_norp
+        30,  # gap_rstn
     )
     # Plot data range limiter at +- 30s
     peak_idx = (
