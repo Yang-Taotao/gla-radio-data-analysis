@@ -11,7 +11,7 @@ Created on Wed Mar 15 2023
 from data_handler import data_loader, data_filter, quiet_sun
 
 # Data plotter import
-from data_plotter import generator
+from data_plotter import plot_generator
 
 # Data fitter import
 # from data_fitter import gyro_fitter, plas_fitter
@@ -77,4 +77,4 @@ arg1, arg2, arg3 = (
 
 # %% Plot generation
 # Generate plot with function calls
-generator(arg1, arg2, arg3)
+plot_generator(arg1, arg2, arg3)

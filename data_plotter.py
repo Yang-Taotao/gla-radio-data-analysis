@@ -245,7 +245,7 @@ def log_plotter(arg):
 
 
 # Plot parser
-def generator(arg1, arg2, arg3):
+def plot_generator(arg1, arg2, arg3):
     """
     Parameters
     ----------
