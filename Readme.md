@@ -26,23 +26,23 @@ We will perform the tasks with the following steps:
 
 ## Working file structure
 Main file:
-- main.py               ## The master script
+- main.py               
 
 Data reader modules:
-- data_reader.py        ## To load csv files
+- data_reader.py        
 
 Data processing modules:
-- data_handler.py       ## To handle data files
+- data_handler.py       
 
 Data fitter modules:
-- data_fitter.py        ## To fit the data to assigned model
+- data_fitter.py        
 
 Plotter modules:
-- data_plotter.py       ## To plot figures
+- data_plotter.py       
 
 ## Supplementary files
 Readme:
-- Readme.md             ## Simple readme file
+- Readme.md             
 
-Legacy repo:
-- data_legacy.py        ## Legacy plotters
+Legacy plotter repo:
+- data_legacy.py        
