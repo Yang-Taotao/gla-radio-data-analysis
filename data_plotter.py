@@ -69,7 +69,6 @@ def norp_log_plotter(arg):
     plt.title("NoRP quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_norp.png")
-    plt.show()
 
 
 # RSTN log log plotter - flux vs freq at each time - 200 index = 190 s
@@ -143,7 +142,6 @@ def rstn_log_plotter(arg):
     plt.title("RSTN quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_rstn.png")
-    plt.show()
 
 
 # Combined plotter
@@ -235,7 +233,6 @@ def log_plotter(arg):
     plt.title("Combined quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_combined.png")
-    plt.show()
 
 
 # Plot parser
