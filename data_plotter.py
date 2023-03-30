@@ -5,17 +5,19 @@ Created on Wed Mar 15 2023
 
 @author: Yang-Taotao
 """
+# %% Library import
 # Library import
 import numpy as np
 import matplotlib.pyplot as plt
 import scienceplots
 
+# %%  Plot style config
 # Plot style configuration
 plt.style.use(["science", "notebook", "grid"])
 
-# Plotters
-# NORP log log plotter - flux vs freq at each time - 100 index = 10 s
-def norp_log_plotter(arg):
+# %% NoRP plotter
+# NoRP log log plotter - flux vs freq at each time - 100 index = 10 s
+def norp_plotter(arg):
     """
     Parameters
     ----------
@@ -71,9 +73,9 @@ def norp_log_plotter(arg):
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_norp.png")
 
-
+# %% RSTN plotter
 # RSTN log log plotter - flux vs freq at each time - 200 index = 190 s
-def rstn_log_plotter(arg):
+def rstn_plotter(arg):
     """
     Parameters
     ----------
@@ -100,8 +102,8 @@ def rstn_log_plotter(arg):
     peak = (
         np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
         np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
-        60,  # peak_gap
-        30,  # gap
+        90,  # peak_gap
+        45,  # gap
     )
     # Plot data range limiter at +- 30s
     peak_idx = (
@@ -146,7 +148,7 @@ def rstn_log_plotter(arg):
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_rstn.png")
 
-
+# %% Combined plotter
 # Combined plotter
 def log_plotter(arg):
     """
@@ -180,9 +182,9 @@ def log_plotter(arg):
         np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
         np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
         600,  # peak_norp_gap
-        60,  # peak_rstn_gap
+        90,  # peak_rstn_gap
         300,  # gap_norp
-        30,  # gap_rstn
+        45,  # gap_rstn
     )
     # Plot data range limiter at +- 30s
     peak_idx = (
@@ -240,9 +242,30 @@ def log_plotter(arg):
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_combined.png")
 
+# %% Peak plotter
+# Peak time plotter
+def peak_plotter(arg):
+    # Local variable repo
+    data_peak_freq, data_peak_flux = arg[0], arg[1]
 
+    # Plot generation
+    plt.plot(data_peak_freq, data_peak_flux)
+
+    # Plot axis scale definer
+    plt.xscale("log")
+    plt.yscale("log")
+
+    # Plot customizations
+    plt.xlabel("Combined frequencies", fontsize=14)
+    plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
+    plt.title("Combined quiet sun flux at peak time", fontsize=16)
+    plt.savefig("./media/figure_peak_time.png")
+
+    print(data_peak_freq, data_peak_flux)
+
+# %% Plot generator
 # Plot parser
-def plot_generator(arg1, arg2, arg3):
+def plot_generator(arg1, arg2, arg3, arg4):
     """
     Parameters
     ----------
@@ -251,7 +274,9 @@ def plot_generator(arg1, arg2, arg3):
     arg2 : tuple
         Argument for RSTN plotter.
     arg3 : tuple
-        Argument for Combined plotter.
+        Argument for combined plotter.
+    arg4 : tuple
+        Argument for peak time plotter.
 
     Returns
     -------
@@ -260,9 +285,10 @@ def plot_generator(arg1, arg2, arg3):
     """
     # Parse plotter arguments
     result = (
-        norp_log_plotter(arg1),
-        rstn_log_plotter(arg2),
+        norp_plotter(arg1),
+        rstn_plotter(arg2),
         log_plotter(arg3),
+        peak_plotter(arg4),
     )
     # Plotter results return
     return result

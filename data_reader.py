@@ -5,10 +5,12 @@ Created on Wed Mar 15 2023
 
 @author: Yang-Taotao
 """
+# %% Library import
 # Library import
 import datetime as dt
 import numpy as np
 
+# %% Data parser
 # CSV data parser
 def csv_loader(file_path, dtype=float):
     """

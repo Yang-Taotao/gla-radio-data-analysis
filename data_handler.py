@@ -5,10 +5,12 @@ Created on Wed Mar 15 2023
 
 @author: Yang-Taotao
 """
+# %% Library import
 # Library import
 import numpy as np
 from data_reader import csv_loader
 
+# %% Data loader
 # Combined data loader
 def loader(data_path):
     """
@@ -82,7 +84,7 @@ def loader(data_path):
         data_phf_tim,  # Time of apl - Palehua data
     )
 
-
+# %% Data validator
 # NORP data filter based on mvd file
 def validator(data_norp_mvd, data_norp_tim, data_norp_fi):
     """
@@ -114,7 +116,7 @@ def validator(data_norp_mvd, data_norp_tim, data_norp_fi):
     # Return filtered result
     return (data_norp_tim_valid, data_norp_fi_valid)
 
-
+# %% Quiet sun flux calculator
 # Quiet sun calculator
 def quiet_sun(data_array_tuple):
     """
@@ -136,83 +138,105 @@ def quiet_sun(data_array_tuple):
     # Return quiet sun flux array tuple
     return data_array_repo
 
-
-# Peak time index identifier
-def peak_time(arg):
+# %% Peak time array collector
+# Peak time array collector
+def collector(arg):
     """
     Parameters
     ----------
     arg : tuple
-        Tuple of time data arrays with peak time.
+        Tuple of time, peak time, freq, flux data arrays.
 
     Returns
     -------
-    idx_norp : integer
-        Index of NoRP peak time.
-    idex_apl : integer
-        Index of apl peak time.
-    idx_phf : integer
-        Index of phf peak time.
-    """
-    # Local variable repo
-    data_norp_tim_valid, data_apl_tim, data_phf_tim, data_norp_peak_time = (
-        arg[0],
-        arg[1],
-        arg[2],
-        arg[3],
-    )
-
-    # Index locator
-    idx_norp, idex_apl, idx_phf = (
-        np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],
-        np.where(data_apl_tim == data_norp_peak_time)[0][0],
-        np.where(data_phf_tim == data_norp_peak_time)[0][0],
-    )
-
-    # Return index repo
-    return idx_norp, idex_apl, idx_phf
-
-
-# Peak time flux array collector
-def collector(data_norp_fi_peak, data_apl_fi_peak, data_phf_fi_peak, arg):
-    """
-    Parameters
-    ----------
-    data_norp_fi_peak : array
-        Quiet sun flux array of NoRP data.
-    data_apl_fi_peak : array
-        Quiet sun flux array of apl data.
-    data_phf_fi_peak : array
-        Quiet sun flux array of phf data.
-    arg : tuple
-        Tuple of time data arrays with peak time.
-
-    Returns
-    -------
-    data_fi_peak_time_combined : array
+    data_fi_combined : array
         Peak time flux array combined.
+    data_freq_combined : array
+        Peak time freq array combined.
     """
-    # Import peak identifier result
-    idx_norp, idx_apl, idx_phf = peak_time(arg)
+    # Peak time index identifier and freq combiner
+    def peak_time(arg):
+        """
+        Parameters
+        ----------
+        arg : tuple
+            Tuple of time data arrays with peak time.
 
-    # Generate new peak time flux array
-    data_norp_fi_peak_time, data_apl_fi_peak_time, data_phf_fi_peak_time = (
-        data_norp_fi_peak[idx_norp],
-        data_apl_fi_peak[idx_apl],
-        data_phf_fi_peak[idx_phf],
-    )
+        Returns
+        -------
+        idx_norp : integer
+            Index of NoRP peak time.
+        idex_apl : integer
+            Index of apl peak time.
+        idx_phf : integer
+            Index of phf peak time.
+        data_freq_peak_time_combined : array
+            Combined freq array.
+        """
+        # Local variable repo
+        data_norp_tim_valid, data_apl_tim, data_phf_tim, data_norp_peak_time = (
+            arg[0],
+            arg[1],
+            arg[2],
+            arg[3],
+        )
 
-    # Peak time flux array tuple generator
-    data_fi_peak_time = tuple(
-        [
-            data_norp_fi_peak_time,
-            data_apl_fi_peak_time,
-            data_phf_fi_peak_time,
-        ]
-    )
+        # Index locator
+        idx_norp, idex_apl, idx_phf = (
+            np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],
+            np.where(data_apl_tim == data_norp_peak_time)[0][0],
+            np.where(data_phf_tim == data_norp_peak_time)[0][0],
+        )
 
-    # Peak time flux array generator
-    data_fi_peak_time_combined = np.concatenate(data_fi_peak_time)
+        # Return index repo
+        return idx_norp, idex_apl, idx_phf
+
+    
+    # Peak time freq collector
+    def peak_freq(arg):
+        # Local variable repo
+        data_norp_freq, data_apl_freq, data_phf_freq = (arg[4], arg[5], arg[6])
+
+        # Concatenate freq array
+        data_freq = tuple(
+            [
+                data_norp_freq, 
+                data_apl_freq, 
+                data_phf_freq,
+            ]
+        )
+        data_freq_combined = np.concatenate(data_freq)
+
+        # Return combined freq array
+        return data_freq_combined
+    
+
+    # Peak time flux collector
+    def peak_flux(arg):
+        # Local variable repo
+        data_norp_flux_peak, data_apl_flux_peak, data_phf_flux_peak = (
+            arg[7], arg[8], arg[9]
+        )
+
+        # Import peak identifier result
+        idx_norp, idx_apl, idx_phf = peak_time(arg)
+
+        # Concatenate freq array
+        data_flux = tuple(
+            [
+                data_norp_flux_peak[idx_norp],
+                data_apl_flux_peak[idx_apl],
+                data_phf_flux_peak[idx_phf],
+            ]
+        )
+        data_flux_combined = np.concatenate(data_flux)
+
+        # Return combined freq array
+        return data_flux_combined
+
+
+    # Peak time freq, flux array generator
+    data_freq_combined, data_flux_combined = peak_freq(arg), peak_flux(arg)
 
     # Return combined peak time flux array
-    return data_fi_peak_time_combined
+    return data_freq_combined, data_flux_combined
