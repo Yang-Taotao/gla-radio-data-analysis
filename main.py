@@ -8,7 +8,7 @@ Created on Wed Mar 15 2023
 """
 # %% Library import
 # Data handler import
-from data_handler import data_loader, data_filter, quiet_sun
+from data_handler import data_loader, data_filter, quiet_sun, quiet_sun_loop
 
 # Data plotter import
 from data_plotter import plot_generator

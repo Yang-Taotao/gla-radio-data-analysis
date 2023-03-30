@@ -9,9 +9,10 @@ Created on Wed Mar 15 2023
 import numpy as np
 import scipy as sp
 
+# Preliminary data combiner around peak
+
+
 # Curve fitters
-
-
 # Gyrosynchrontron emission fitter
 # def gyro_fitter():
 #     def model():

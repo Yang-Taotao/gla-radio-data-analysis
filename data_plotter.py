@@ -56,8 +56,7 @@ def norp_log_plotter(arg):
                 data_norp_fi_peak[i : i + peak[2]], axis=0
             ),  # Mean data calculator
             label=data_norp_tim_valid[i],
-        )
-        for i in range(peak_idx[0], peak_idx[1], peak[2])
+        ) for i in range(peak_idx[0], peak_idx[1], peak[2])
     ]
 
     # Plot axis scale definer
@@ -121,8 +120,7 @@ def rstn_log_plotter(arg):
                 data_apl_fi_peak[i : i + peak[3]], axis=0
             ),  # Mean data calculator
             label=data_apl_tim[i],
-        )
-        for i in range(peak_idx[0], peak_idx[1], peak[3])
+        ) for i in range(peak_idx[0], peak_idx[1], peak[3])
     ]
     # Plot phf with loops
     [
@@ -132,8 +130,7 @@ def rstn_log_plotter(arg):
                 data_phf_fi_peak[i : i + peak[3]], axis=0
             ),  # Mean data calculator
             label=data_phf_tim[i],
-        )
-        for i in range(peak_idx[2], peak_idx[3], peak[3])
+        ) for i in range(peak_idx[2], peak_idx[3], peak[3])
     ]
 
     # Plot axis scale definer
@@ -205,8 +202,7 @@ def log_plotter(arg):
                 data_norp_fi_peak[i : i + peak[5]], axis=0
             ),  # Mean data calculator
             label=data_norp_tim_valid[i],
-        )
-        for i in range(peak_idx[0], peak_idx[1], peak[5])
+        ) for i in range(peak_idx[0], peak_idx[1], peak[5])
     ]
     # Plot apl with loops
     [
@@ -216,8 +212,7 @@ def log_plotter(arg):
                 data_apl_fi_peak[i : i + peak[6]], axis=0
             ),  # Mean data calculator
             label=data_apl_tim[i],
-        )
-        for i in range(peak_idx[2], peak_idx[3], peak[6])
+        ) for i in range(peak_idx[2], peak_idx[3], peak[6])
     ]
     # Plot phf with loops
     [
@@ -227,8 +222,7 @@ def log_plotter(arg):
                 data_phf_fi_peak[i : i + peak[6]], axis=0
             ),  # Mean data calculator
             label=data_phf_tim[i],
-        )
-        for i in range(peak_idx[4], peak_idx[5], peak[6])
+        ) for i in range(peak_idx[4], peak_idx[5], peak[6])
     ]
 
     # Plot axis scale definer
