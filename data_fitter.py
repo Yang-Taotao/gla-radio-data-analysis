@@ -5,36 +5,53 @@ Created on Wed Mar 15 2023
 
 @author: Yang-Taotao
 """
+# %% Library import
 # Library import
 import numpy as np
 from scipy.optimize import curve_fit
+from scipy.stats import chi2
 
-# Radio data curve fit model functions repo
-def model_func(arg):
-    # Local variable repo
-    data_freq, A, B, a, b, c, k = [arg[i] for i in range(len(arg))]
-    # Function assignment
-    flux_gyro, flux_plas = (
-        A * data_freq**a * (1 - np.exp(-B * data_freq**(-b))),
-        c * data_freq**k,
+# %% Gyro fitter
+# Gyro fitter function
+def gyro_fitter(data_x, data_y):
+    # Gyro model definition
+    def gyro_model(x, A, B, a, b):
+        # Return gyro model
+        return A * x**a * (1 - np.exp(-B * x**(-b)))
+    
+    # Iniitial parameter guess
+    p0 = [1, 1, 1, 1]  # A, B, a, b
+    
+    # Curve fit results
+    params, cov = curve_fit(gyro_model, data_x, data_y, p0=p0)
+    
+    # Residuals generator
+    # Get fitted model
+    fit_model = gyro_model(data_x, *params)
+    # Residual generator
+    fit_resid = data_y-fit_model
+    
+    # Chi2 Tester
+    # Chi2 calculation and dof generation
+    chi_sqr, chi_dof = (
+        np.sum(fit_resid**2 / fit_model),
+        len(data_x)-len(params),
     )
-    # Function repo
-    flux_model = (flux_gyro, flux_plas)
+    # Chi2 p-value calculation
+    chi_p_val = 1 - chi2.cdf(chi_sqr, chi_dof)
+
+    # Results print out
+    # Print fit parameters
+    print(f"{'Fitted parameters':<20}")
+    print(f"{'A:':<20}{params[0]:>10.3f}")
+    print(f"{'B:':<20}{params[1]:>10.3f}")
+    print(f"{'a:':<20}{params[2]:>10.3f}")
+    print(f"{'b:':<20}{params[3]:>10.3f}")
+    print()
+    # Print chi2 results
+    print(f"{'Chi-square test result':<20}")
+    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}")
+    print(f"{'p-value:':<20}{chi_p_val:>10.3f}")
+
     # Function return
-    return flux_model
-
-
-# General curve fitter
-def curve_fitter(model_string, data_x, data_y, arg):
-    # Model selector
-    if model_string = "gyro":
-        model, p0 = (
-            model_func(arg)[0],  # Get gyro model
-            [1, 1, 1, 1],  # A, B, a, b initial guess
-        )
-    elif model_string = "plas":
-        model, p0 = (
-            model_func(arg)[1],  # Get plas model
-            [1, 1],  # c, k initial guess
-        )
-    # Fitter
+    return(params, cov, chi_sqr, chi_p_val)
