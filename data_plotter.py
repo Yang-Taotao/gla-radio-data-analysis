@@ -51,15 +51,15 @@ def norp_plotter(arg):
     )
 
     # Plot with loops
-    [
+    plt_0 = [
         plt.plot(
             data_norp_freq,
             np.mean(
                 data_norp_fi_peak[i : i + peak[2]], axis=0
             ),  # Mean data calculator
-            "+-", 
-            markersize=10, 
-            label="NoRP "+data_norp_tim_valid[i],
+            "+-",
+            markersize=10,
+            label="NoRP " + data_norp_tim_valid[i],
         )
         for i in range(peak_idx[0], peak_idx[1], peak[2])
     ]
@@ -75,6 +75,10 @@ def norp_plotter(arg):
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_norp.png")
     plt.close()
+
+    # Return function call
+    return plt_0
+
 
 # %% RSTN plotter
 # RSTN log log plotter - flux vs freq at each time - 200 index = 190 s
@@ -118,29 +122,29 @@ def rstn_plotter(arg):
 
     # Plot generation
     # Plot apl with loops
-    [
+    plt_1 = [
         plt.plot(
             data_apl_freq,
             np.mean(
                 data_apl_fi_peak[i : i + peak[3]], axis=0
             ),  # Mean data calculator
-            "x-", 
-            markersize=10, 
-            label="RSTN_apl "+data_apl_tim[i],
+            "x-",
+            markersize=10,
+            label="RSTN_apl " + data_apl_tim[i],
         )
         for i in range(peak_idx[0], peak_idx[1], peak[3])
     ]
     # Plot phf with loops
-    [
+    plt_2 = [
         plt.plot(
             data_phf_freq,
             np.mean(
                 data_phf_fi_peak[i : i + peak[3]], axis=0
             ),  # Mean data calculator
-            "o-", 
-            markerfacecolor='none',
-            markersize=10, 
-            label="RSTN_phf "+data_phf_tim[i],
+            "o-",
+            markerfacecolor="none",
+            markersize=10,
+            label="RSTN_phf " + data_phf_tim[i],
         )
         for i in range(peak_idx[2], peak_idx[3], peak[3])
     ]
@@ -156,6 +160,10 @@ def rstn_plotter(arg):
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_rstn.png")
     plt.close()
+
+    # Return function call
+    return (plt_1, plt_2)
+
 
 # %% Combined plotter
 # Combined plotter
@@ -207,42 +215,42 @@ def log_plotter(arg):
 
     # Plot generation
     # Plot norp with loops
-    [
+    plt_3 = [
         plt.plot(
             data_norp_freq,
             np.mean(
                 data_norp_fi_peak[i : i + peak[5]], axis=0
             ),  # Mean data calculator
-            "+-", 
-            markersize=10, 
-            label="NoRP "+data_norp_tim_valid[i],
+            "+-",
+            markersize=10,
+            label="NoRP " + data_norp_tim_valid[i],
         )
         for i in range(peak_idx[0], peak_idx[1], peak[5])
     ]
     # Plot apl with loops
-    [
+    plt_4 = [
         plt.plot(
             data_apl_freq,
             np.mean(
                 data_apl_fi_peak[i : i + peak[6]], axis=0
             ),  # Mean data calculator
-            "x-", 
-            markersize=10, 
-            label="RSTN_apl "+data_apl_tim[i],
+            "x-",
+            markersize=10,
+            label="RSTN_apl " + data_apl_tim[i],
         )
         for i in range(peak_idx[2], peak_idx[3], peak[6])
     ]
     # Plot phf with loops
-    [
+    plt_5 = [
         plt.plot(
             data_phf_freq,
             np.mean(
                 data_phf_fi_peak[i : i + peak[6]], axis=0
             ),  # Mean data calculator
-            "o-", 
-            markerfacecolor='none',
-            markersize=10, 
-            label="RSTN_phf "+data_phf_tim[i],
+            "o-",
+            markerfacecolor="none",
+            markersize=10,
+            label="RSTN_phf " + data_phf_tim[i],
         )
         for i in range(peak_idx[4], peak_idx[5], peak[6])
     ]
@@ -259,22 +267,37 @@ def log_plotter(arg):
     plt.savefig("./media/figure_combined.png")
     plt.close()
 
+    # Return function call
+    return (plt_3, plt_4, plt_5)
+
+
 # %% Peak plotter
 # Peak time plotter
 def peak_plotter(arg):
+    """
+    Parameters
+    ----------
+    arg : tuple
+        Peak plotter argument with freq, flux, and peak time.
+
+    Returns
+    -------
+    None.
+
+    """
     # Local variable repo
     data_peak_freq, data_peak_flux, data_norp_peak_time = [
         arg[i] for i in range(len(arg))
     ]
 
     # Plot generation
-    plt.plot(
-        data_peak_freq, 
-        data_peak_flux, 
-        "+-", 
-        markersize=10, 
+    plt_6 = plt.plot(
+        data_peak_freq,
+        data_peak_flux,
+        "+-",
+        markersize=10,
         markeredgecolor="red",
-        label=data_norp_peak_time
+        label=data_norp_peak_time,
     )
 
     # Plot axis scale definer
@@ -289,13 +312,29 @@ def peak_plotter(arg):
     plt.savefig("./media/figure_peak_time.png")
     plt.close()
 
+    # Return function call
+    return plt_6
+
+
 # %% Plot generator
 # Define generator function
 def plot_generator(arg):
+    """
+    Parameters
+    ----------
+    arg : array
+        Plot generator argument with sub plotter arguments.
+
+    Returns
+    -------
+    results : None
+        A collection of plots.
+    """
     # Local variable repo
     arg_norp, arg_rstn, arg_combine, arg_peak = [
         arg[i] for i in range(len(arg))
     ]
+
     # Result compilation
     results = (
         norp_plotter(arg_norp),
@@ -303,5 +342,6 @@ def plot_generator(arg):
         log_plotter(arg_combine),
         peak_plotter(arg_peak),
     )
+
     # Return function call
     return results

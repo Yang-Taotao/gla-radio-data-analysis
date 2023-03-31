@@ -84,6 +84,7 @@ def loader(data_path):
         data_phf_tim,  # Time of apl - Palehua data
     )
 
+
 # %% Data validator
 # NORP data filter based on mvd file
 def validator(data_norp_mvd, data_norp_tim, data_norp_fi):
@@ -116,6 +117,7 @@ def validator(data_norp_mvd, data_norp_tim, data_norp_fi):
     # Return filtered result
     return (data_norp_tim_valid, data_norp_fi_valid)
 
+
 # %% Quiet sun flux calculator
 # Quiet sun calculator
 def quiet_sun(data_array_tuple):
@@ -137,6 +139,7 @@ def quiet_sun(data_array_tuple):
 
     # Return quiet sun flux array tuple
     return data_array_repo
+
 
 # %% Peak time array collector
 # Peak time array collector
@@ -178,9 +181,12 @@ def collector(arg_time, arg_freq, arg_flux):
             Combined freq array.
         """
         # Local variable repo
-        data_norp_tim_valid, data_apl_tim, data_phf_tim, data_norp_peak_time = [
-            arg_time[i] for i in range(len(arg_time))
-        ]
+        (
+            data_norp_tim_valid,
+            data_apl_tim,
+            data_phf_tim,
+            data_norp_peak_time,
+        ) = [arg_time[i] for i in range(len(arg_time))]
 
         # Index locator
         idx_norp, idx_apl, idx_phf = (
@@ -192,7 +198,6 @@ def collector(arg_time, arg_freq, arg_flux):
         # Return index repo
         return idx_norp, idx_apl, idx_phf
 
-    
     # Peak time freq collector
     def peak_freq(arg_freq):
         # Local variable repo
@@ -203,8 +208,8 @@ def collector(arg_time, arg_freq, arg_flux):
         # Concatenate freq array
         data_freq = tuple(
             [
-                data_norp_freq, 
-                data_apl_freq, 
+                data_norp_freq,
+                data_apl_freq,
                 data_phf_freq,
             ]
         )
@@ -212,7 +217,6 @@ def collector(arg_time, arg_freq, arg_flux):
 
         # Return combined freq array
         return data_freq_combined
-    
 
     # Peak time flux collector
     def peak_flux(arg_flux):
@@ -237,9 +241,10 @@ def collector(arg_time, arg_freq, arg_flux):
         # Return combined freq array
         return data_flux_combined
 
-
     # Peak time freq, flux array generator
-    data_freq_combined, data_flux_combined = peak_freq(arg_freq), peak_flux(arg_flux)
+    data_freq_combined, data_flux_combined = peak_freq(arg_freq), peak_flux(
+        arg_flux
+    )
 
     # Array sorter
     # Get numpy index sort array

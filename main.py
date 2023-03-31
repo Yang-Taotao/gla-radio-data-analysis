@@ -47,22 +47,22 @@ norp_fi_peak, apl_fi_peak, phf_fi_peak = quiet_sun(
 arg_time, arg_freq, arg_flux = (
     # arg_time
     (
-        norp_tim_valid, 
-        apl_tim, 
-        phf_tim, 
-        norp_peak_time, 
+        norp_tim_valid,
+        apl_tim,
+        phf_tim,
+        norp_peak_time,
     ),
     # arg_freq
     (
-        norp_freq, 
-        apl_freq, 
+        norp_freq,
+        apl_freq,
         phf_freq,
     ),
     # arg_flux
     (
-        norp_fi_peak, 
-        apl_fi_peak, 
-        phf_fi_peak, 
+        norp_fi_peak,
+        apl_fi_peak,
+        phf_fi_peak,
     ),
 )
 # Peak time arguement tally
@@ -105,11 +105,11 @@ plt_arg1, plt_arg2, plt_arg3, plt_arg4 = (
 
 # %% Plot generator argument assignment
 # Plot generator argument assignment
-plt_arg = (plt_arg1, plt_arg2, plt_arg3, plt_arg4) 
+plt_arg = (plt_arg1, plt_arg2, plt_arg3, plt_arg4)
 
 # %% Plot generation
 plot_generator(plt_arg)
 
 # %% Curve fitter
 # Generate fit results
-results = (gyro_fitter(peak_time_freq, peak_time_flux))
+results = gyro_fitter(peak_time_freq, peak_time_flux)
