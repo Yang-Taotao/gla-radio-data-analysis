@@ -23,6 +23,8 @@ norp_peak_time = "2013-10-28 01:59:38"
 
 # %% Data repo
 # Deposit data arrays
+data_repo = loader(data_path)
+# Assign loaded data
 (
     norp_fi,
     norp_freq,
@@ -34,7 +36,7 @@ norp_peak_time = "2013-10-28 01:59:38"
     phf_fi,
     phf_freq,
     phf_tim,
-) = loader(data_path)
+) = [data_repo[i] for i in range(len(data_repo))]
 # Deposit norp validity filtered arrays
 norp_tim_valid, norp_fi_valid = validator(norp_mvd, norp_tim, norp_fi)
 # Deposit quiet sun result

@@ -21,43 +21,14 @@ def loader(data_path):
 
     Returns
     -------
-    data_norp_fi : array
-        Flux array of NORP data.
-    data_norp_freq : array
-        Freq array of NORP data.
-    data_norp_mvd : array
-        Validity array of NORP data.
-    data_norp_tim : array
-        Time array of NORP data.
-    data_apl_flux : array
-        Flux array of apl data of RSTN.
-    data_apl_freq : array
-        Freq array of apl data of RSTN.
-    data_apl_tim : array
-        Time array of apl data of RSTN.
-    data_phf_flux : array
-        Flux array of phf data of RSTN.
-    data_phf_freq : array
-        Freq array of phf data of RSTN.
-    data_phf_tim : array
-        Time array of phf data of RSTN.
+    result : tuple
+        Tuple of loaded data arrays.
     """
     # Local path variable repo
     flux, freq, mvd, tim = ("flux.csv", "freq.csv", "mvd.csv", "tim.csv")
 
-    # Load data
-    (
-        data_norp_fi,
-        data_norp_freq,
-        data_norp_mvd,
-        data_norp_tim,
-        data_apl_flux,
-        data_apl_freq,
-        data_apl_tim,
-        data_phf_flux,
-        data_phf_freq,
-        data_phf_tim,
-    ) = (
+    # Pack data into tuple
+    result = (
         csv_loader(data_path[0] + flux),
         csv_loader(data_path[0] + freq),
         csv_loader(data_path[0] + mvd, dtype=int),
@@ -71,19 +42,7 @@ def loader(data_path):
     )
 
     # Return the assignment
-    return (
-        data_norp_fi,  # Flux data at different freq
-        data_norp_freq,  # List of recorded freq
-        data_norp_mvd,  # Data validit checker, same dimension with flux
-        data_norp_tim,  # Milliseconds since the day, days since 1979-01-01
-        data_apl_flux,  # Flux of apl - Learmonth data
-        data_apl_freq,  # Freq of apl - Learmonth data
-        data_apl_tim,  # Time of apl - Learmonth data
-        data_phf_flux,  # Flux of apl - Palehua data
-        data_phf_freq,  # Freq of apl - Palehua data
-        data_phf_tim,  # Time of apl - Palehua data
-    )
-
+    return result
 
 # %% Data validator
 # NORP data filter based on mvd file
@@ -117,7 +76,6 @@ def validator(data_norp_mvd, data_norp_tim, data_norp_fi):
     # Return filtered result
     return (data_norp_tim_valid, data_norp_fi_valid)
 
-
 # %% Quiet sun flux calculator
 # Quiet sun calculator
 def quiet_sun(data_array_tuple):
@@ -139,7 +97,6 @@ def quiet_sun(data_array_tuple):
 
     # Return quiet sun flux array tuple
     return data_array_repo
-
 
 # %% Peak time array collector
 # Peak time array collector
