@@ -13,7 +13,7 @@ from data_handler import loader, validator, quiet_sun, collector
 from data_plotter import plot_generator
 
 # Data fitter import
-from data_fitter import gyro_fitter
+from data_fitter import gyro_fitter, plas_fitter
 
 # %% Key data assignment
 # Assign norp, apl, and phf file path
@@ -112,4 +112,7 @@ plot_generator(plt_arg)
 
 # %% Curve fitter
 # Generate fit results
-results = gyro_fitter(peak_time_freq, peak_time_flux)
+results_gyro, results_plas = (
+    gyro_fitter(peak_time_freq, peak_time_flux),
+    plas_fitter(peak_time_freq, peak_time_flux),
+)

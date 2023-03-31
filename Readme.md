@@ -1,7 +1,7 @@
 ## Radio data analysis
 This is a course project for *ASTRO-5010* at *University of Glasgow*.
 - Drafted: Mar 15, 2023
-- Editted: Mar 29, 2023
+- Editted: Mar 31, 2023
 
 ## Data set
 We employ the data obtained from:
@@ -46,3 +46,10 @@ Readme:
 
 Legacy plotter repo:
 - data_legacy.py        
+
+## Folder structure
+Data folder:
+- data
+
+Plot folder:
+- media
