@@ -40,8 +40,8 @@ def norp_plotter(arg):
     # Gain peak value time array index
     peak = (
         np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],  # peak
-        600,  # peak_gap
-        300,  # gap
+        300,  # peak_gap
+        150,  # gap
     )
     # Plot data range limiter at +- 30s --> peak_gap >= 300
     # Structure - (peak_start, peak_end)
@@ -57,7 +57,9 @@ def norp_plotter(arg):
             np.mean(
                 data_norp_fi_peak[i : i + peak[2]], axis=0
             ),  # Mean data calculator
-            label=data_norp_tim_valid[i],
+            "+-", 
+            markersize=10, 
+            label="NoRP "+data_norp_tim_valid[i],
         )
         for i in range(peak_idx[0], peak_idx[1], peak[2])
     ]
@@ -67,11 +69,12 @@ def norp_plotter(arg):
     plt.yscale("log")
 
     # Plot customizations
-    plt.xlabel("NoRP frequencies", fontsize=14)
+    plt.xlabel("NoRP frequencies (GHz)", fontsize=14)
     plt.ylabel("Valid NoRP quiet sun filtered flux", fontsize=14)
     plt.title("NoRP quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_norp.png")
+    plt.close()
 
 # %% RSTN plotter
 # RSTN log log plotter - flux vs freq at each time - 200 index = 190 s
@@ -102,8 +105,8 @@ def rstn_plotter(arg):
     peak = (
         np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
         np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
-        90,  # peak_gap
-        45,  # gap
+        60,  # peak_gap
+        60,  # gap
     )
     # Plot data range limiter at +- 30s
     peak_idx = (
@@ -121,7 +124,9 @@ def rstn_plotter(arg):
             np.mean(
                 data_apl_fi_peak[i : i + peak[3]], axis=0
             ),  # Mean data calculator
-            label=data_apl_tim[i],
+            "x-", 
+            markersize=10, 
+            label="RSTN_apl "+data_apl_tim[i],
         )
         for i in range(peak_idx[0], peak_idx[1], peak[3])
     ]
@@ -132,7 +137,10 @@ def rstn_plotter(arg):
             np.mean(
                 data_phf_fi_peak[i : i + peak[3]], axis=0
             ),  # Mean data calculator
-            label=data_phf_tim[i],
+            "o-", 
+            markerfacecolor='none',
+            markersize=10, 
+            label="RSTN_phf "+data_phf_tim[i],
         )
         for i in range(peak_idx[2], peak_idx[3], peak[3])
     ]
@@ -142,11 +150,12 @@ def rstn_plotter(arg):
     plt.yscale("log")
 
     # Plot customizations
-    plt.xlabel("RSTN frequencies", fontsize=14)
+    plt.xlabel("RSTN frequencies (GHz)", fontsize=14)
     plt.ylabel("Valid RSTN quiet sun filtered flux", fontsize=14)
     plt.title("RSTN quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_rstn.png")
+    plt.close()
 
 # %% Combined plotter
 # Combined plotter
@@ -181,10 +190,10 @@ def log_plotter(arg):
         np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],  # peak
         np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
         np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
-        600,  # peak_norp_gap
-        90,  # peak_rstn_gap
-        300,  # gap_norp
-        45,  # gap_rstn
+        300,  # peak_norp_gap
+        60,  # peak_rstn_gap
+        150,  # gap_norp
+        60,  # gap_rstn
     )
     # Plot data range limiter at +- 30s
     peak_idx = (
@@ -204,7 +213,9 @@ def log_plotter(arg):
             np.mean(
                 data_norp_fi_peak[i : i + peak[5]], axis=0
             ),  # Mean data calculator
-            label=data_norp_tim_valid[i],
+            "+-", 
+            markersize=10, 
+            label="NoRP "+data_norp_tim_valid[i],
         )
         for i in range(peak_idx[0], peak_idx[1], peak[5])
     ]
@@ -215,7 +226,9 @@ def log_plotter(arg):
             np.mean(
                 data_apl_fi_peak[i : i + peak[6]], axis=0
             ),  # Mean data calculator
-            label=data_apl_tim[i],
+            "x-", 
+            markersize=10, 
+            label="RSTN_apl "+data_apl_tim[i],
         )
         for i in range(peak_idx[2], peak_idx[3], peak[6])
     ]
@@ -226,7 +239,10 @@ def log_plotter(arg):
             np.mean(
                 data_phf_fi_peak[i : i + peak[6]], axis=0
             ),  # Mean data calculator
-            label=data_phf_tim[i],
+            "o-", 
+            markerfacecolor='none',
+            markersize=10, 
+            label="RSTN_phf "+data_phf_tim[i],
         )
         for i in range(peak_idx[4], peak_idx[5], peak[6])
     ]
@@ -236,59 +252,56 @@ def log_plotter(arg):
     plt.yscale("log")
 
     # Plot customizations
-    plt.xlabel("Combined NoRP and RSTN frequencies", fontsize=14)
+    plt.xlabel("Combined NoRP and RSTN frequencies (GHz)", fontsize=14)
     plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
     plt.title("Combined quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_combined.png")
+    plt.close()
 
 # %% Peak plotter
 # Peak time plotter
 def peak_plotter(arg):
     # Local variable repo
-    data_peak_freq, data_peak_flux = arg[0], arg[1]
+    data_peak_freq, data_peak_flux, data_norp_peak_time = [
+        arg[i] for i in range(len(arg))
+    ]
 
     # Plot generation
-    plt.plot(data_peak_freq, data_peak_flux)
+    plt.plot(
+        data_peak_freq, 
+        data_peak_flux, 
+        "+-", 
+        markersize=10, 
+        markeredgecolor="red",
+        label=data_norp_peak_time
+    )
 
     # Plot axis scale definer
     plt.xscale("log")
     plt.yscale("log")
 
     # Plot customizations
-    plt.xlabel("Combined frequencies", fontsize=14)
+    plt.xlabel("Combined frequencies at peak time (GHz)", fontsize=14)
     plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
     plt.title("Combined quiet sun flux at peak time", fontsize=16)
+    plt.legend(fontsize=10)
     plt.savefig("./media/figure_peak_time.png")
-
-    print(data_peak_freq, data_peak_flux)
+    plt.close()
 
 # %% Plot generator
-# Plot parser
-def plot_generator(arg1, arg2, arg3, arg4):
-    """
-    Parameters
-    ----------
-    arg1 : tuple
-        Argument for NoRP plotter.
-    arg2 : tuple
-        Argument for RSTN plotter.
-    arg3 : tuple
-        Argument for combined plotter.
-    arg4 : tuple
-        Argument for peak time plotter.
-
-    Returns
-    -------
-    result :
-        The function calls.
-    """
-    # Parse plotter arguments
-    result = (
-        norp_plotter(arg1),
-        rstn_plotter(arg2),
-        log_plotter(arg3),
-        peak_plotter(arg4),
+# Define generator function
+def plot_generator(arg):
+    # Local variable repo
+    arg_norp, arg_rstn, arg_combine, arg_peak = [
+        arg[i] for i in range(len(arg))
+    ]
+    # Result compilation
+    results = (
+        norp_plotter(arg_norp),
+        rstn_plotter(arg_rstn),
+        log_plotter(arg_combine),
+        peak_plotter(arg_peak),
     )
-    # Plotter results return
-    return result
+    # Return function call
+    return results

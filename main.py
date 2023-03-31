@@ -13,7 +13,7 @@ from data_handler import loader, validator, quiet_sun, collector
 from data_plotter import plot_generator
 
 # Data fitter import
-# from data_fitter import
+from data_fitter import gyro_fitter
 
 # %% Key data assignment
 # Assign norp, apl, and phf file path
@@ -43,24 +43,33 @@ norp_fi_peak, apl_fi_peak, phf_fi_peak = quiet_sun(
 )
 
 # %% Peak time array argument assignment
-peak_arg = (
-    norp_tim_valid, 
-    apl_tim, 
-    phf_tim, 
-    norp_peak_time, 
-    norp_freq, 
-    apl_freq, 
-    phf_freq,
-    norp_fi_peak, 
-    apl_fi_peak, 
-    phf_fi_peak, 
+# Time, Freq, Flux sub function arguemnt repo
+arg_time, arg_freq, arg_flux = (
+    # arg_time
+    (
+        norp_tim_valid, 
+        apl_tim, 
+        phf_tim, 
+        norp_peak_time, 
+    ),
+    # arg_freq
+    (
+        norp_freq, 
+        apl_freq, 
+        phf_freq,
+    ),
+    # arg_flux
+    (
+        norp_fi_peak, 
+        apl_fi_peak, 
+        phf_fi_peak, 
+    ),
 )
+# Peak time arguement tally
+peak_arg = (arg_time, arg_freq, arg_flux)
 
 # %% Peak time flux array repo
-peak_time_freq, peak_time_flux = (
-    collector(peak_arg)[0],
-    collector(peak_arg)[1],
-)
+peak_time_freq, peak_time_flux = collector(*peak_arg)
 
 # %% Plotter argument assignment
 # Plot arguments assignment
@@ -91,10 +100,16 @@ plt_arg1, plt_arg2, plt_arg3, plt_arg4 = (
         norp_peak_time,
     ),
     # Peak time plotter arguments
-    (peak_time_freq, peak_time_flux),
+    (peak_time_freq, peak_time_flux, norp_peak_time),
 )
 
-# %% Plot generation
-# Generate plot with function calls
-plot_generator(plt_arg1, plt_arg2, plt_arg3, plt_arg4)
+# %% Plot generator argument assignment
+# Plot generator argument assignment
+plt_arg = (plt_arg1, plt_arg2, plt_arg3, plt_arg4) 
 
+# %% Plot generation
+plot_generator(plt_arg)
+
+# %% Curve fitter
+# Generate fit results
+results = (gyro_fitter(peak_time_freq, peak_time_flux))

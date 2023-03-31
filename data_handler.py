@@ -140,12 +140,16 @@ def quiet_sun(data_array_tuple):
 
 # %% Peak time array collector
 # Peak time array collector
-def collector(arg):
+def collector(arg_time, arg_freq, arg_flux):
     """
     Parameters
     ----------
-    arg : tuple
-        Tuple of time, peak time, freq, flux data arrays.
+    arg_time : tuple
+        Tuple of time and peak time data arrays.
+    arg_freq : tuple
+        Tuple of freq data arrays.
+    arg_flux : tuple
+        Tuple of flux data arrays.
 
     Returns
     -------
@@ -155,7 +159,7 @@ def collector(arg):
         Peak time freq array combined.
     """
     # Peak time index identifier and freq combiner
-    def peak_time(arg):
+    def peak_time(arg_time):
         """
         Parameters
         ----------
@@ -174,28 +178,27 @@ def collector(arg):
             Combined freq array.
         """
         # Local variable repo
-        data_norp_tim_valid, data_apl_tim, data_phf_tim, data_norp_peak_time = (
-            arg[0],
-            arg[1],
-            arg[2],
-            arg[3],
-        )
+        data_norp_tim_valid, data_apl_tim, data_phf_tim, data_norp_peak_time = [
+            arg_time[i] for i in range(len(arg_time))
+        ]
 
         # Index locator
-        idx_norp, idex_apl, idx_phf = (
+        idx_norp, idx_apl, idx_phf = (
             np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],
             np.where(data_apl_tim == data_norp_peak_time)[0][0],
             np.where(data_phf_tim == data_norp_peak_time)[0][0],
         )
 
         # Return index repo
-        return idx_norp, idex_apl, idx_phf
+        return idx_norp, idx_apl, idx_phf
 
     
     # Peak time freq collector
-    def peak_freq(arg):
+    def peak_freq(arg_freq):
         # Local variable repo
-        data_norp_freq, data_apl_freq, data_phf_freq = (arg[4], arg[5], arg[6])
+        data_norp_freq, data_apl_freq, data_phf_freq = [
+            arg_freq[i] for i in range(len(arg_freq))
+        ]
 
         # Concatenate freq array
         data_freq = tuple(
@@ -212,14 +215,14 @@ def collector(arg):
     
 
     # Peak time flux collector
-    def peak_flux(arg):
+    def peak_flux(arg_flux):
         # Local variable repo
-        data_norp_flux_peak, data_apl_flux_peak, data_phf_flux_peak = (
-            arg[7], arg[8], arg[9]
-        )
+        data_norp_flux_peak, data_apl_flux_peak, data_phf_flux_peak = [
+            arg_flux[i] for i in range(len(arg_flux))
+        ]
 
         # Import peak identifier result
-        idx_norp, idx_apl, idx_phf = peak_time(arg)
+        idx_norp, idx_apl, idx_phf = peak_time(arg_time)
 
         # Concatenate freq array
         data_flux = tuple(
@@ -236,7 +239,16 @@ def collector(arg):
 
 
     # Peak time freq, flux array generator
-    data_freq_combined, data_flux_combined = peak_freq(arg), peak_flux(arg)
+    data_freq_combined, data_flux_combined = peak_freq(arg_freq), peak_flux(arg_flux)
+
+    # Array sorter
+    # Get numpy index sort array
+    idx_sort = np.argsort(data_freq_combined)
+    # Sort array with index
+    data_freq_final, data_flux_final = (
+        data_freq_combined[idx_sort],
+        data_flux_combined[idx_sort],
+    )
 
     # Return combined peak time flux array
-    return data_freq_combined, data_flux_combined
+    return data_freq_final, data_flux_final
