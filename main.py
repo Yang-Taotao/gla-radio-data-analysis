@@ -10,7 +10,7 @@ Created on Wed Mar 15 2023
 from data_handler import loader, validator, quiet_sun, collector
 
 # Data plotter import
-from data_plotter import plot_generator
+from data_plotter import plot_generator, log_avg_plotter
 
 # Data fitter import
 from data_fitter import gyro_fitter, plas_fitter
@@ -115,11 +115,14 @@ plt_arg1, plt_arg2, plt_arg3, plt_arg4 = (
     ),
     # Peak time combined plotter arguments
     (
-        peak_time_freq, 
-        peak_time_flux, 
+        peak_time_freq,
+        peak_time_flux,
         norp_peak_time,
     ),
 )
+
+# %% Averaged flux array parser
+norp_peak_avg, apl_peak_avg, phf_peak_avg = log_avg_plotter(plt_arg3)
 
 # %% Plot generator argument assignment
 # Plot generator argument assignment

@@ -9,6 +9,7 @@ Created on Tue Mar 28 2023
 import numpy as np
 import matplotlib.pyplot as plt
 import scienceplots
+
 # Custom module import
 from data_fitter import gyro_model, plas_model
 
@@ -138,14 +139,14 @@ def fit_plotter(arg):
         data_norp_freq,
         data_apl_freq,
         data_phf_freq,
-        data_peak_flux_norp, 
-        data_peak_flux_apl, 
+        data_peak_flux_norp,
+        data_peak_flux_apl,
         data_peak_flux_phf,
-        norp_gyro_param, 
-        norp_plas_param, 
-        apl_gyro_param, 
-        apl_plas_param, 
-        phf_gyro_param, 
+        norp_gyro_param,
+        norp_plas_param,
+        apl_gyro_param,
+        apl_plas_param,
+        phf_gyro_param,
         phf_plas_param,
     ) = [arg[i] for i in range(len(arg))]
 

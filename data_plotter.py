@@ -10,6 +10,7 @@ Created on Wed Mar 15 2023
 import numpy as np
 import matplotlib.pyplot as plt
 import scienceplots
+
 # Custom module import
 from data_fitter import gyro_model, plas_model
 
@@ -263,7 +264,7 @@ def log_plotter(arg):
 
     # Plot customizations
     plt.xlabel("Combined NoRP and RSTN frequencies (GHz)", fontsize=14)
-    plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
+    plt.ylabel("Quiet sun filtered flux (SFU)", fontsize=14)
     plt.title("Combined quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_combined.png")
@@ -318,6 +319,104 @@ def peak_plotter(arg):
     return plt_6
 
 
+# %% Combined peak time plotter
+# Combined peak time plotter
+def log_avg_plotter(arg):
+    """
+    Parameters
+    ----------
+    arg : tuple
+        Plotter argument parameters.
+
+    Returns
+    -------
+    None.
+    """
+    # Local variable repo
+    (
+        data_norp_tim_valid,
+        data_apl_tim,
+        data_phf_tim,
+        data_norp_fi_peak,
+        data_apl_fi_peak,
+        data_phf_fi_peak,
+        data_norp_freq,
+        data_apl_freq,
+        data_phf_freq,
+        data_norp_peak_time,
+    ) = [arg[i] for i in range(len(arg))]
+
+    # Plot range limiter
+    # Gain peak value time array index
+    peak = (
+        np.where(data_norp_tim_valid == data_norp_peak_time)[0][0],  # peak
+        np.where(data_apl_tim == data_norp_peak_time)[0][0],  # peak_apl
+        np.where(data_phf_tim == data_norp_peak_time)[0][0],  # peak_phf
+        300,  # peak_norp_gap
+        60,  # peak_rstn_gap
+        150,  # gap_norp
+        60,  # gap_rstn
+    )
+    # Plot data range limiter at +- 30s
+    peak_idx = (
+        max(0, peak[0] - peak[3]),  # peak_start
+        min(data_norp_fi_peak.shape[0], peak[0] + peak[3]),  # peak_end
+        max(0, peak[1] - peak[4]),  # peak_apl_start
+        min(data_apl_fi_peak.shape[0], peak[1] + peak[4]),  # peak_apl_end
+        max(0, peak[2] - peak[4]),  # peak_phf_start
+        min(data_phf_fi_peak.shape[0], peak[2] + peak[4]),  # peak_phf_end
+    )
+
+    # Generate peak time averaged data array
+    data_norp_peak_avg, data_apl_peak_avg, data_phf_peak_avg = (
+        data_norp_fi_peak[peak_idx[0] : peak_idx[1], :],
+        data_apl_fi_peak[peak_idx[2] : peak_idx[3], :],
+        data_phf_fi_peak[peak_idx[4] : peak_idx[5], :],
+    )
+
+    # Plot generation
+    # Plot norp with loops
+    plt.plot(
+        data_norp_freq,
+        np.mean(data_norp_peak_avg, axis=0),
+        "+-",
+        markersize=10,
+        label="NoRP " + data_norp_tim_valid[peak[0]],
+    )
+    # Plot apl with loops
+    plt.plot(
+        data_apl_freq,
+        np.mean(data_apl_peak_avg, axis=0),
+        "x-",
+        markersize=10,
+        label="RSTN_apl " + data_apl_tim[peak[1]],
+    )
+    # Plot phf with loops
+    plt.plot(
+        data_phf_freq,
+        np.mean(data_phf_peak_avg, axis=0),
+        "o-",
+        markerfacecolor="none",
+        markersize=10,
+        label="RSTN_phf " + data_phf_tim[peak[2]],
+    )
+
+    # Plot axis scale definer
+    plt.xscale("log")
+    plt.yscale("log")
+
+    # Plot customizations
+    plt.xlabel("Combined NoRP and RSTN frequencies (GHz)", fontsize=14)
+    plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
+    plt.title("Combined quiet sun at peak time", fontsize=16)
+    plt.legend(fontsize=10)
+    plt.savefig("./media/figure_peak_average_combined.png")
+    plt.close()
+
+    # Return averaged flux array at peak time
+    return data_norp_peak_avg, data_apl_peak_avg, data_phf_peak_avg
+
+
 # %% Plot generator
 # Define generator function
 def plot_generator(arg):
@@ -343,6 +442,7 @@ def plot_generator(arg):
         rstn_plotter(arg_rstn),
         log_plotter(arg_combine),
         peak_plotter(arg_peak),
+        log_avg_plotter(arg_combine),
     )
 
     # Return function call

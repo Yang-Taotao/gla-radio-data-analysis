@@ -25,7 +25,8 @@ def gyro_model(x_val, param_a_cap, param_b_cap, param_a, param_b):
 # Plas model definition
 def plas_model(x_val, param_c, param_k):
     # Return plas model
-    return (param_c * x_val**param_k)
+    return param_c * x_val**param_k
+
 
 # %% Gyro fitter
 # Gyro fitter function
@@ -49,13 +50,10 @@ def gyro_fitter(data_freq, data_flux):
     chi_p_val : float
         The p-value from the chi-sqaured test.
     """
-    # Gyro fit data filter
-    # Fliter index generation
-    idx_filter = data_freq > 2
     # Generate filtered data
     data_x, data_y = (
-        data_freq[idx_filter],
-        data_flux[idx_filter],
+        data_freq[data_freq > 2],
+        data_flux[data_freq > 2],
     )
 
     # Iniitial parameter guess
@@ -99,6 +97,7 @@ def gyro_fitter(data_freq, data_flux):
     # Function return
     return (params, cov, chi_sqr, chi_p_val)
 
+
 # %% Plas fitter
 # Plas fitter function
 def plas_fitter(data_x, data_y):
@@ -121,13 +120,10 @@ def plas_fitter(data_x, data_y):
     chi_p_val : float
         The p-value from the chi-sqaured test.
     """
-    # Plas fit data filter
-    # Fliter index generation
-    idx_filter = data_x <= 2
     # Generate filtered data
     data_x, data_y = (
-        data_x[idx_filter],
-        data_y[idx_filter],
+        data_x[data_x <= 2],
+        data_y[data_x <= 2],
     )
 
     # Iniitial parameter guess

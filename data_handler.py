@@ -44,6 +44,7 @@ def loader(data_path):
     # Return the assignment
     return result
 
+
 # %% Data validator
 # NORP data filter based on mvd file
 def validator(data_norp_mvd, data_norp_tim, data_norp_fi):
@@ -76,6 +77,7 @@ def validator(data_norp_mvd, data_norp_tim, data_norp_fi):
     # Return filtered result
     return (data_norp_tim_valid, data_norp_fi_valid)
 
+
 # %% Quiet sun flux calculator
 # Quiet sun calculator
 def quiet_sun(data_array_tuple):
@@ -97,6 +99,7 @@ def quiet_sun(data_array_tuple):
 
     # Return quiet sun flux array tuple
     return data_array_repo
+
 
 # %% Peak time array collector
 # Peak time array collector
@@ -206,7 +209,9 @@ def collector(arg_time, arg_freq, arg_flux):
         return data_flux_combined
 
     # Peak time freq, flux array generator
-    data_freq_combined, data_flux_combined = peak_freq(arg_freq), peak_flux(arg_flux)
+    data_freq_combined, data_flux_combined = peak_freq(arg_freq), peak_flux(
+        arg_flux
+    )
 
     # Array sorter
     # Get numpy index sort array
@@ -224,7 +229,9 @@ def collector(arg_time, arg_freq, arg_flux):
     # Calculate the mean y values for each unique x value
     data_flux_final = np.zeros(len(data_freq_final))
     for i, xval in enumerate(data_freq_final):
-        data_flux_final[i] = np.mean(data_flux_sorted[data_freq_sorted == xval])
+        data_flux_final[i] = np.mean(
+            data_flux_sorted[data_freq_sorted == xval]
+        )
 
     # Return combined peak time flux array
     return data_freq_final, data_flux_final
