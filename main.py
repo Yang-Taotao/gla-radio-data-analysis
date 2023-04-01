@@ -71,7 +71,19 @@ arg_time, arg_freq, arg_flux = (
 peak_arg = (arg_time, arg_freq, arg_flux)
 
 # %% Peak time flux array repo
+# Assign peak time combined freq and flux array
 peak_time_freq, peak_time_flux = collector(*peak_arg)
+
+# %% Curve fitter
+# Generate combined fit results
+results_gyro, results_plas = (
+    gyro_fitter(peak_time_freq, peak_time_flux),
+    plas_fitter(peak_time_freq, peak_time_flux),
+)
+
+# %% Fit parameter cache
+# General combined fit parameter cache
+gyro_param, plas_param = results_gyro[0], results_plas[0]
 
 # %% Plotter argument assignment
 # Plot arguments assignment
@@ -101,8 +113,12 @@ plt_arg1, plt_arg2, plt_arg3, plt_arg4 = (
         phf_freq,
         norp_peak_time,
     ),
-    # Peak time plotter arguments
-    (peak_time_freq, peak_time_flux, norp_peak_time),
+    # Peak time combined plotter arguments
+    (
+        peak_time_freq, 
+        peak_time_flux, 
+        norp_peak_time,
+    ),
 )
 
 # %% Plot generator argument assignment
@@ -111,10 +127,3 @@ plt_arg = (plt_arg1, plt_arg2, plt_arg3, plt_arg4)
 
 # %% Plot generation
 plot_generator(plt_arg)
-
-# %% Curve fitter
-# Generate fit results
-results_gyro, results_plas = (
-    gyro_fitter(peak_time_freq, peak_time_flux),
-    plas_fitter(peak_time_freq, peak_time_flux),
-)

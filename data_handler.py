@@ -185,12 +185,19 @@ def collector(arg_time, arg_freq, arg_flux):
         # Import peak identifier result
         idx_norp, idx_apl, idx_phf = peak_time(arg_time)
 
+        # Pick peak time flux array out
+        data_norp_flux_peak, data_apl_flux_peak, data_phf_flux_peak = (
+            data_norp_flux_peak[idx_norp],
+            data_apl_flux_peak[idx_apl],
+            data_phf_flux_peak[idx_phf],
+        )
+
         # Concatenate freq array
         data_flux = tuple(
             [
-                data_norp_flux_peak[idx_norp],
-                data_apl_flux_peak[idx_apl],
-                data_phf_flux_peak[idx_phf],
+                data_norp_flux_peak,
+                data_apl_flux_peak,
+                data_phf_flux_peak,
             ]
         )
         data_flux_combined = np.concatenate(data_flux)
@@ -199,18 +206,25 @@ def collector(arg_time, arg_freq, arg_flux):
         return data_flux_combined
 
     # Peak time freq, flux array generator
-    data_freq_combined, data_flux_combined = peak_freq(arg_freq), peak_flux(
-        arg_flux
-    )
+    data_freq_combined, data_flux_combined = peak_freq(arg_freq), peak_flux(arg_flux)
 
     # Array sorter
     # Get numpy index sort array
     idx_sort = np.argsort(data_freq_combined)
     # Sort array with index
-    data_freq_final, data_flux_final = (
+    data_freq_sorted, data_flux_sorted = (
         data_freq_combined[idx_sort],
         data_flux_combined[idx_sort],
     )
+
+    # Array uniqe value filter
+    # Get the unique freq values array
+    data_freq_final = np.unique(data_freq_sorted)
+
+    # Calculate the mean y values for each unique x value
+    data_flux_final = np.zeros(len(data_freq_final))
+    for i, xval in enumerate(data_freq_final):
+        data_flux_final[i] = np.mean(data_flux_sorted[data_freq_sorted == xval])
 
     # Return combined peak time flux array
     return data_freq_final, data_flux_final

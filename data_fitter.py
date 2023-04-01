@@ -11,15 +11,31 @@ import numpy as np
 from scipy.optimize import curve_fit
 from scipy.stats import chi2
 
+# %% Fit model definition
+# Gyro model definition
+def gyro_model(x_val, param_a_cap, param_b_cap, param_a, param_b):
+    # Return gyro model
+    return (
+        param_a_cap
+        * x_val**param_a
+        * (1 - np.exp(-param_b_cap * x_val ** (-param_b)))
+    )
+
+
+# Plas model definition
+def plas_model(x_val, param_c, param_k):
+    # Return plas model
+    return (param_c * x_val**param_k)
+
 # %% Gyro fitter
 # Gyro fitter function
-def gyro_fitter(data_x, data_y):
+def gyro_fitter(data_freq, data_flux):
     """
     Parameters
     ----------
-    data_x : array
+    data_freq : array
         Combined freq data array.
-    data_y : array
+    data_flux : array
         Combined flux data array.
 
     Returns
@@ -33,14 +49,14 @@ def gyro_fitter(data_x, data_y):
     chi_p_val : float
         The p-value from the chi-sqaured test.
     """
-    # Gyro model definition
-    def gyro_model(x_val, param_a_cap, param_b_cap, param_a, param_b):
-        # Return gyro model
-        return (
-            param_a_cap
-            * x_val**param_a
-            * (1 - np.exp(-param_b_cap * x_val ** (-param_b)))
-        )
+    # Gyro fit data filter
+    # Fliter index generation
+    idx_filter = data_freq > 2
+    # Generate filtered data
+    data_x, data_y = (
+        data_freq[idx_filter],
+        data_flux[idx_filter],
+    )
 
     # Iniitial parameter guess
     param_guess = [1, 1, 1, 1]  # param_A, param_B, param_a, param_b
@@ -105,13 +121,17 @@ def plas_fitter(data_x, data_y):
     chi_p_val : float
         The p-value from the chi-sqaured test.
     """
-    # Gyro model definition
-    def plas_model(x_val, param_c, param_k):
-        # Return gyro model
-        return (param_c * x_val**param_k)
+    # Plas fit data filter
+    # Fliter index generation
+    idx_filter = data_x <= 2
+    # Generate filtered data
+    data_x, data_y = (
+        data_x[idx_filter],
+        data_y[idx_filter],
+    )
 
     # Iniitial parameter guess
-    param_guess = [1, 1]  # param_A, param_B, param_a, param_b
+    param_guess = [1, 1]  # param_c, param_k
 
     # Curve fit results
     params, cov = curve_fit(plas_model, data_x, data_y, p0=param_guess)

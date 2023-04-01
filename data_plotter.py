@@ -10,6 +10,8 @@ Created on Wed Mar 15 2023
 import numpy as np
 import matplotlib.pyplot as plt
 import scienceplots
+# Custom module import
+from data_fitter import gyro_model, plas_model
 
 # %%  Plot style config
 # Plot style configuration
