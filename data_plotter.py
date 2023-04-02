@@ -76,11 +76,11 @@ def norp_plotter(arg):
     plt.ylabel("Valid NoRP quiet sun filtered flux", fontsize=14)
     plt.title("NoRP quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
-    plt.savefig("./media/figure_norp.png")
+    plt.savefig("./media/figure_01_norp.png")
     plt.close()
 
     # Return function call
-    return plt_0
+    return (plt_0)
 
 
 # %% RSTN plotter
@@ -125,7 +125,7 @@ def rstn_plotter(arg):
 
     # Plot generation
     # Plot apl with loops
-    plt_1 = [
+    plt_0 = [
         plt.plot(
             data_apl_freq,
             np.mean(
@@ -138,7 +138,7 @@ def rstn_plotter(arg):
         for i in range(peak_idx[0], peak_idx[1], peak[3])
     ]
     # Plot phf with loops
-    plt_2 = [
+    plt_1 = [
         plt.plot(
             data_phf_freq,
             np.mean(
@@ -161,11 +161,11 @@ def rstn_plotter(arg):
     plt.ylabel("Valid RSTN quiet sun filtered flux", fontsize=14)
     plt.title("RSTN quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
-    plt.savefig("./media/figure_rstn.png")
+    plt.savefig("./media/figure_02_rstn.png")
     plt.close()
 
     # Return function call
-    return (plt_1, plt_2)
+    return (plt_0, plt_1)
 
 
 # %% Combined plotter
@@ -218,7 +218,7 @@ def log_plotter(arg):
 
     # Plot generation
     # Plot norp with loops
-    plt_3 = [
+    plt_0 = [
         plt.plot(
             data_norp_freq,
             np.mean(
@@ -231,7 +231,7 @@ def log_plotter(arg):
         for i in range(peak_idx[0], peak_idx[1], peak[5])
     ]
     # Plot apl with loops
-    plt_4 = [
+    plt_1 = [
         plt.plot(
             data_apl_freq,
             np.mean(
@@ -244,7 +244,7 @@ def log_plotter(arg):
         for i in range(peak_idx[2], peak_idx[3], peak[6])
     ]
     # Plot phf with loops
-    plt_5 = [
+    plt_2 = [
         plt.plot(
             data_phf_freq,
             np.mean(
@@ -267,11 +267,11 @@ def log_plotter(arg):
     plt.ylabel("Quiet sun filtered flux (SFU)", fontsize=14)
     plt.title("Combined quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
-    plt.savefig("./media/figure_combined.png")
+    plt.savefig("./media/figure_03_combined.png")
     plt.close()
 
     # Return function call
-    return (plt_3, plt_4, plt_5)
+    return (plt_0, plt_1, plt_2)
 
 
 # %% Peak plotter
@@ -294,7 +294,7 @@ def peak_plotter(arg):
     ]
 
     # Plot generation
-    plt_6 = plt.plot(
+    plt_0 = plt.plot(
         data_peak_freq,
         data_peak_flux,
         "+-",
@@ -312,11 +312,11 @@ def peak_plotter(arg):
     plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
     plt.title("Combined quiet sun flux at peak time", fontsize=16)
     plt.legend(fontsize=10)
-    plt.savefig("./media/figure_peak_time.png")
+    plt.savefig("./media/figure_03_peak_time.png")
     plt.close()
 
     # Return function call
-    return plt_6
+    return (plt_0)
 
 
 # %% Combined peak time plotter
@@ -410,11 +410,11 @@ def log_avg_plotter(arg):
     plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
     plt.title("Combined quiet sun at peak time", fontsize=16)
     plt.legend(fontsize=10)
-    plt.savefig("./media/figure_peak_average_combined.png")
+    plt.savefig("./media/figure_03_peak_average_combined.png")
     plt.close()
 
     # Return averaged flux array at peak time
-    return data_norp_peak_avg, data_apl_peak_avg, data_phf_peak_avg
+    return (data_norp_peak_avg, data_apl_peak_avg, data_phf_peak_avg)
 
 
 # %% Plot generator
