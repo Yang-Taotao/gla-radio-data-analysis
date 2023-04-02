@@ -402,7 +402,7 @@ def peak_plotter(arg):
 
     # Fitted function repo
     data_gyro, data_plas = (
-        gyro_model(data_peak_freq[data_peak_freq >= freq_cut], *gyro_param),
+        gyro_model(data_peak_freq, *gyro_param),
         plas_model(data_peak_freq[data_peak_freq < freq_cut], *plas_param),
     )
 
@@ -421,7 +421,7 @@ def peak_plotter(arg):
     )
     # Gyro fit curve - x >= 2
     plt_1 = plt.plot(
-        data_peak_freq[data_peak_freq >= freq_cut],
+        data_peak_freq,
         data_gyro,
         "+--",
         markersize=10,

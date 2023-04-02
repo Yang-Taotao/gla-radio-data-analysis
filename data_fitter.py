@@ -103,7 +103,7 @@ def fit_label(gyro_param, plas_param):
 
 # %% Gyro fitter
 # Gyro fitter function
-def gyro_fitter(data_freq, data_flux, cut):
+def gyro_fitter(data_freq, data_flux, title):
     """
     Parameters
     ----------
@@ -111,8 +111,8 @@ def gyro_fitter(data_freq, data_flux, cut):
         Combined freq data array.
     data_flux : array
         Combined flux data array.
-    cut : float
-        Cut-off point for different fits.
+    title : string
+        Additional title for plot customization.
 
     Returns
     -------
@@ -127,8 +127,8 @@ def gyro_fitter(data_freq, data_flux, cut):
     """
     # Generate filtered data
     data_x, data_y = (
-        data_freq[data_freq >= cut],
-        data_flux[data_freq >= cut],
+        data_freq,
+        data_flux,
     )
 
     # Iniitial parameter guess
@@ -155,7 +155,7 @@ def gyro_fitter(data_freq, data_flux, cut):
     # Results print out
     # Gyro fitter result title
     print()
-    print(f"{'Gyro fitter results':<20}")
+    print(f"{'Gyro fitter results ' + title:<20}")
     print("=" * 70)
     # Print fit parameters
     print(f"{'Gyro fitter fitted parameters':<20}")
@@ -238,80 +238,6 @@ def plas_fitter(data_x, data_y, cut):
     # Print fit parameters
     print(f"{'Plas fitter fitted parameters':<20}")
     print(f"{'c:':<20}{params[0]:>10.3g}{'':10}{'k:':<20}{params[1]:>10.3g}")
-    print()
-    # Print chi2 results
-    print(f"{'Chi-square test result':<20}")
-    print(
-        f"{'Chi-square:':<20}{chi_sqr:>10.3g}"
-        f"{'':10}{'p-value:':<20}{chi_p_val:>10.3g}"
-    )
-    print("=" * 70)
-    print()
-
-    # Function return
-    return (params, cov, chi_sqr, chi_p_val)
-
-
-# %% Gyro fitter
-# Gyro fitter function
-def denoise_fitter(data_x, data_y):
-    """
-    Parameters
-    ----------
-    data_freq : array
-        Combined freq data array.
-    data_flux : array
-        Combined flux data array.
-    cut : float
-        Cut-off point for different fits.
-    title : string
-        Additional print out customization.
-
-    Returns
-    -------
-    params : array
-        Fit parameters array.
-    cov : float
-        Covariance matrix of the fit.
-    chi_sqr :float
-        Chi-squared value of the fit.
-    chi_p_val : float
-        The p-value from the chi-sqaured test.
-    """
-    # Iniitial parameter guess
-    param_guess = [1, 1, 1, 1]  # param_A, param_B, param_a, param_b
-
-    # Curve fit results
-    params, cov = curve_fit(gyro_model, data_x, data_y, p0=param_guess)
-
-    # Residuals generator
-    # Get fitted model
-    fit_model = gyro_model(data_x, *params)
-    # Residual generator
-    fit_resid = data_y - fit_model
-
-    # Chi2 Tester
-    # Chi2 calculation and dof generation
-    chi_sqr, chi_dof = (
-        np.sum(fit_resid**2 / fit_model),
-        len(data_x) - len(params),
-    )
-    # Chi2 p-value calculation
-    chi_p_val = 1 - chi2.cdf(chi_sqr, chi_dof)
-
-    # Results print out
-    # Gyro fitter result title
-    print()
-    print(f"{'Denoised gyro fitter results':<20}")
-    print("=" * 70)
-    # Print fit parameters
-    print(f"{'Gyro fitter fitted parameters':<20}")
-    print(f"{'A:':<20}{params[0]:>10.3g}{'':10}{'B:':<20}{params[1]:>10.3g}")
-    print(f"{'a:':<20}{params[2]:>10.3g}{'':10}{'b:':<20}{params[3]:>10.3g}")
-    print(
-        f"{'Low freq slope:':<20}{params[2]:>10.3g}"
-        f"{'':10}{'High freq slope:':<20}{params[2]-params[3]:>10.3g}"
-    )
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
