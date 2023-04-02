@@ -156,10 +156,21 @@ def collector(arg_time, arg_freq, arg_flux):
         )
 
         # Return index repo
-        return idx_norp, idx_apl, idx_phf
+        return (idx_norp, idx_apl, idx_phf)
 
     # Peak time freq collector
     def peak_freq(arg_freq):
+        """
+        Parameters
+        ----------
+        arg_freq : tuple
+            Tuple of freq data arrays.
+
+        Returns
+        -------
+        data_freq_combined : array
+            Combined freq array.
+        """
         # Local variable repo
         data_norp_freq, data_apl_freq, data_phf_freq = [
             arg_freq[i] for i in range(len(arg_freq))
@@ -180,6 +191,18 @@ def collector(arg_time, arg_freq, arg_flux):
 
     # Peak time flux collector
     def peak_flux(arg_flux):
+        """
+        Parameters
+        ----------
+        arg_flux : tuple
+            Tuple of flux data arrays.
+
+        Returns
+        -------
+        data_flux_combined : array
+            Combined flux array.
+
+        """
         # Local variable repo
         data_norp_flux_peak, data_apl_flux_peak, data_phf_flux_peak = [
             arg_flux[i] for i in range(len(arg_flux))
@@ -227,11 +250,12 @@ def collector(arg_time, arg_freq, arg_flux):
     data_freq_final = np.unique(data_freq_sorted)
 
     # Calculate the mean y values for each unique x value
-    data_flux_final = np.zeros(len(data_freq_final))
-    for i, xval in enumerate(data_freq_final):
-        data_flux_final[i] = np.mean(
-            data_flux_sorted[data_freq_sorted == xval]
-        )
+    data_flux_final = np.array(
+        [
+            np.mean(data_flux_sorted[data_freq_sorted == xval])
+            for xval in data_freq_final
+        ]
+    )
 
     # Return combined peak time flux array
-    return data_freq_final, data_flux_final
+    return (data_freq_final, data_flux_final)

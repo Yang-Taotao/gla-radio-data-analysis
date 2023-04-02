@@ -5,7 +5,8 @@ Created on Wed Mar 15 2023
 
 @author: Yang-Taotao
 """
-# %% Custom module import
+# %% Library import
+# Custom module import
 # Data handler import
 from data_handler import loader, validator, quiet_sun, collector
 
@@ -15,16 +16,16 @@ from data_plotter import plot_generator, log_avg_plotter
 # Data fitter import
 from data_fitter import gyro_fitter, plas_fitter
 
-# %% Key data assignment
+# %% Data path and peak time assignment
 # Assign norp, apl, and phf file path
 data_path = ("./data/norp/", "./data/apl/", "./data/phf/")
 # Assign the peaktime of flux recording
 norp_peak_time = "2013-10-28 01:59:38"
 
-# %% Data repo
+# %% Load csv data into data repo
 # Deposit data arrays
 data_repo = loader(data_path)
-# Assign loaded data
+# Assign loaded data to variables
 (
     norp_fi,
     norp_freq,
@@ -37,9 +38,11 @@ data_repo = loader(data_path)
     phf_freq,
     phf_tim,
 ) = [data_repo[i] for i in range(len(data_repo))]
-# Deposit norp validity filtered arrays
+
+# %% NoRP validity filter result deposit
 norp_tim_valid, norp_fi_valid = validator(norp_mvd, norp_tim, norp_fi)
-# Deposit quiet sun result
+
+# %% NoRP quiet sun result deposit
 norp_fi_peak, apl_fi_peak, phf_fi_peak = quiet_sun(
     (norp_fi_valid, apl_fi, phf_fi)
 )
@@ -70,21 +73,19 @@ arg_time, arg_freq, arg_flux = (
 # Peak time arguement tally
 peak_arg = (arg_time, arg_freq, arg_flux)
 
-# %% Peak time flux array repo
-# Assign peak time combined freq and flux array
+# %% Get peak time combined flux and time array
 peak_time_freq, peak_time_flux = collector(*peak_arg)
 
-# %% Curve fitter
-# Define cut-off freq
-freq_cut = 1
-# Generate combined fit results
+# %% Curve fitter key value assignment - Define cut-off freq
+freq_cut = 2
+
+# %% Generate combined fit results
+# Get fitted results
 results_gyro, results_plas = (
     gyro_fitter(peak_time_freq, peak_time_flux, freq_cut),
     plas_fitter(peak_time_freq, peak_time_flux, freq_cut),
 )
-
-# %% Fit parameter cache
-# General combined fit parameter cache
+# Assign fit parameters
 gyro_param, plas_param = results_gyro[0], results_plas[0]
 
 # %% Plotter argument assignment
@@ -120,17 +121,16 @@ plt_arg1, plt_arg2, plt_arg3, plt_arg4 = (
         peak_time_freq,
         peak_time_flux,
         norp_peak_time,
-        gyro_param, 
+        gyro_param,
         plas_param,
-        freq_cut
+        freq_cut,
     ),
 )
 
-# %% Averaged flux array parser
+# %% Optional - Averaged flux array parser
 norp_peak_avg, apl_peak_avg, phf_peak_avg = log_avg_plotter(plt_arg3)
 
 # %% Plot generator argument assignment
-# Plot generator argument assignment
 plt_arg = (plt_arg1, plt_arg2, plt_arg3, plt_arg4)
 
 # %% Plot generation

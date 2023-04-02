@@ -76,11 +76,13 @@ def norp_plotter(arg):
     plt.ylabel("Valid NoRP quiet sun filtered flux", fontsize=14)
     plt.title("NoRP quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
+
+    # Save and close
     plt.savefig("./media/figure_01_norp.png")
     plt.close()
 
     # Return function call
-    return (plt_0)
+    return plt_0
 
 
 # %% RSTN plotter
@@ -161,6 +163,8 @@ def rstn_plotter(arg):
     plt.ylabel("Valid RSTN quiet sun filtered flux", fontsize=14)
     plt.title("RSTN quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
+
+    # Save and close
     plt.savefig("./media/figure_02_rstn.png")
     plt.close()
 
@@ -267,6 +271,8 @@ def log_plotter(arg):
     plt.ylabel("Quiet sun filtered flux (SFU)", fontsize=14)
     plt.title("Combined quiet sun time evolution", fontsize=16)
     plt.legend(fontsize=10)
+
+    # Save and close
     plt.savefig("./media/figure_03_combined.png")
     plt.close()
 
@@ -365,6 +371,8 @@ def log_avg_plotter(arg):
     plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
     plt.title("Combined quiet sun at peak time", fontsize=16)
     plt.legend(fontsize=10)
+
+    # Save and close
     plt.savefig("./media/figure_03_peak_average_combined.png")
     plt.close()
 
@@ -388,14 +396,14 @@ def peak_plotter(arg):
     """
     # Local variable repo
     (
-        data_peak_freq, 
-        data_peak_flux, 
-        data_norp_peak_time, 
-        gyro_param, 
+        data_peak_freq,
+        data_peak_flux,
+        data_norp_peak_time,
+        gyro_param,
         plas_param,
         freq_cut,
-     ) = [arg[i] for i in range(len(arg))]
-    
+    ) = [arg[i] for i in range(len(arg))]
+
     # Fitted function repo
     data_gyro, data_plas = (
         gyro_model(data_peak_freq[data_peak_freq >= freq_cut], *gyro_param),
@@ -412,7 +420,7 @@ def peak_plotter(arg):
         ".",
         markersize=10,
         markeredgecolor="black",
-        label=data_norp_peak_time,
+        label="Flux sequence at peak time: " + data_norp_peak_time,
     )
     # Gyro fit curve - x >= 2
     plt_1 = plt.plot(
@@ -440,7 +448,9 @@ def peak_plotter(arg):
     # Plot customizations
     plt.xlabel("Combined frequencies at peak time (GHz)", fontsize=14)
     plt.ylabel("Valid quiet sun filtered flux (SFU)", fontsize=14)
-    plt.title("Combined quiet sun flux at peak time with curve fit", fontsize=16)
+    plt.title(
+        "Combined quiet sun flux at peak time with curve fit", fontsize=16
+    )
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_03_peak_time.png")
     plt.close()

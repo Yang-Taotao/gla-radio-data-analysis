@@ -14,6 +14,25 @@ from scipy.stats import chi2
 # %% Fit model definition
 # Gyro model definition
 def gyro_model(x_val, param_a_cap, param_b_cap, param_a, param_b):
+    """
+    Parameters
+    ----------
+    x_val : array
+        Gyro model x value array.
+    param_a_cap : float
+        Fit param A.
+    param_b_cap : float
+        Fit param B.
+    param_a : float
+        Fit param a.
+    param_b : float
+        Fit param b.
+
+    Returns
+    -------
+    array
+        Gyro model.
+    """
     # Return gyro model
     return (
         param_a_cap
@@ -24,31 +43,62 @@ def gyro_model(x_val, param_a_cap, param_b_cap, param_a, param_b):
 
 # Plas model definition
 def plas_model(x_val, param_c, param_k):
+    """
+    Parameters
+    ----------
+    x_val : array
+        Plasma model x value array.
+    param_c : float
+        Fit param c.
+    param_k : float
+        Fit param k.
+
+    Returns
+    -------
+    array
+        Plasma model.
+
+    """
     # Return plas model
     return param_c * x_val**param_k
 
 
 # %% Fitted function result label generator
 def fit_label(gyro_param, plas_param):
+    """
+    Parameters
+    ----------
+    gyro_param : tuple
+        Gyro model fit param tuple.
+    plas_param : tuple
+        Plas model fit param tuple.
+
+    Returns
+    -------
+    label_gyro : string
+        Fitted gyro model expression.
+    label_plas : string
+        Fitted plas model expression.
+    """
+    # Cache into singular tuple
+    fit_param = np.concatenate([gyro_param, plas_param]).ravel()
+
     # Local fit cariable unpack
-    fit_a_cap, fit_b_cap, fit_a, fit_b, fit_c, fit_k = (
-        gyro_param[0],
-        gyro_param[1],
-        gyro_param[2],
-        gyro_param[3],
-        plas_param[0],
-        plas_param[1],
-    )
+    fit_a_cap, fit_b_cap, fit_a, fit_b, fit_c, fit_k = [
+        fit_param[i] for i in range(len(fit_param))
+    ]
 
     # Label generator
     label_gyro, label_plas = (
-        fr'Gyro model: $y={fit_a_cap:.3g}x^{{{fit_a:.3g}}}[1-\exp({{-({fit_b_cap:.3g})x^{{-{fit_b:.3g}}}}})]$',
-        fr'Plas model: $y={fit_c:.3g}x^{{{fit_k:.3g}}}$',
+        # Gyro model
+        rf"Gyro model: $y={fit_a_cap:.3g}x^{{{fit_a:.3g}}}"
+        rf"[1-\exp({{-({fit_b_cap:.3g})x^{{-{fit_b:.3g}}}}})]$",
+        # Plas model
+        rf"Plas model: $y={fit_c:.3g}x^{{{fit_k:.3g}}}$",
     )
 
     # Result return
     return (label_gyro, label_plas)
-
 
 
 # %% Gyro fitter
