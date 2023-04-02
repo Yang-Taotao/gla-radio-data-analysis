@@ -155,21 +155,17 @@ def gyro_fitter(data_freq, data_flux, cut):
     # Results print out
     # Gyro fitter result title
     print()
-    print("=" * 30)
     print(f"{'Gyro fitter results':<20}")
-    print()
+    print("=" * 70)
     # Print fit parameters
     print(f"{'Gyro fitter fitted parameters':<20}")
-    print(f"{'A:':<20}{params[0]:>10.3f}")
-    print(f"{'B:':<20}{params[1]:>10.3f}")
-    print(f"{'a:':<20}{params[2]:>10.3f}")
-    print(f"{'b:':<20}{params[3]:>10.3f}")
+    print(f"{'A:':<20}{params[0]:>10.3f}{'':10}{'B:':<20}{params[1]:>10.3f}")
+    print(f"{'a:':<20}{params[2]:>10.3f}{'':10}{'b:':<20}{params[3]:>10.3f}")
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
-    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}")
-    print(f"{'p-value:':<20}{chi_p_val:>10.3f}")
-    print("=" * 30)
+    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}{'':10}{'p-value:':<20}{chi_p_val:>10.3f}")
+    print("=" * 70)
     print()
 
     # Function return
@@ -230,19 +226,16 @@ def plas_fitter(data_x, data_y, cut):
     # Results print out
     # Gyro fitter result title
     print()
-    print("=" * 30)
     print(f"{'Plas fitter results':<20}")
-    print()
+    print("=" * 70)
     # Print fit parameters
     print(f"{'Plas fitter fitted parameters':<20}")
-    print(f"{'c:':<20}{params[0]:>10.3f}")
-    print(f"{'k:':<20}{params[1]:>10.3f}")
+    print(f"{'c:':<20}{params[0]:>10.3f}{'':10}{'k:':<20}{params[1]:>10.3f}")
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
-    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}")
-    print(f"{'p-value:':<20}{chi_p_val:>10.3f}")
-    print("=" * 30)
+    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}{'':10}{'p-value:':<20}{chi_p_val:>10.3f}")
+    print("=" * 70)
     print()
 
     # Function return
@@ -298,21 +291,17 @@ def denoise_fitter(data_x, data_y):
     # Results print out
     # Gyro fitter result title
     print()
-    print("=" * 30)
     print(f"{'Denoised gyro fitter results':<20}")
-    print()
+    print("=" * 70)
     # Print fit parameters
     print(f"{'Gyro fitter fitted parameters':<20}")
-    print(f"{'A:':<20}{params[0]:>10.3f}")
-    print(f"{'B:':<20}{params[1]:>10.3f}")
-    print(f"{'a:':<20}{params[2]:>10.3f}")
-    print(f"{'b:':<20}{params[3]:>10.3f}")
+    print(f"{'A:':<20}{params[0]:>10.3f}{'':10}{'B:':<20}{params[1]:>10.3f}")
+    print(f"{'a:':<20}{params[2]:>10.3f}{'':10}{'b:':<20}{params[3]:>10.3f}")
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
-    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}")
-    print(f"{'p-value:':<20}{chi_p_val:>10.3f}")
-    print("=" * 30)
+    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}{'':10}{'p-value:':<20}{chi_p_val:>10.3f}")
+    print("=" * 70)
     print()
 
     # Function return
