@@ -73,8 +73,7 @@ def norp_plotter(arg):
 
     # Plot customizations
     plt.xlabel("NoRP frequencies (GHz)", fontsize=14)
-    plt.ylabel("Valid NoRP quiet sun filtered flux", fontsize=14)
-    plt.title("NoRP quiet sun time evolution", fontsize=16)
+    plt.ylabel("NoRP flux (SFU)", fontsize=14)
     plt.legend(fontsize=10)
 
     # Save and close
@@ -160,8 +159,7 @@ def rstn_plotter(arg):
 
     # Plot customizations
     plt.xlabel("RSTN frequencies (GHz)", fontsize=14)
-    plt.ylabel("Valid RSTN quiet sun filtered flux", fontsize=14)
-    plt.title("RSTN quiet sun time evolution", fontsize=16)
+    plt.ylabel("RSTN flux (SFU)", fontsize=14)
     plt.legend(fontsize=10)
 
     # Save and close
@@ -267,9 +265,8 @@ def log_plotter(arg):
     plt.yscale("log")
 
     # Plot customizations
-    plt.xlabel("Combined NoRP and RSTN frequencies (GHz)", fontsize=14)
-    plt.ylabel("Quiet sun filtered flux (SFU)", fontsize=14)
-    plt.title("Combined quiet sun time evolution", fontsize=16)
+    plt.xlabel("NoRP and RSTN frequencies (GHz)", fontsize=14)
+    plt.ylabel("NoRP and RSTN flux (SFU)", fontsize=14)
     plt.legend(fontsize=10)
 
     # Save and close
@@ -368,8 +365,7 @@ def log_avg_plotter(arg):
 
     # Plot customizations
     plt.xlabel("Combined NoRP and RSTN frequencies (GHz)", fontsize=14)
-    plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
-    plt.title("Combined quiet sun at peak time", fontsize=16)
+    plt.ylabel("Combined NoRP and RSTN flux (SFU)", fontsize=14)
     plt.legend(fontsize=10)
 
     # Save and close
@@ -446,17 +442,64 @@ def peak_plotter(arg):
     plt.yscale("log")
 
     # Plot customizations
-    plt.xlabel("Combined frequencies at peak time (GHz)", fontsize=14)
-    plt.ylabel("Valid quiet sun filtered flux (SFU)", fontsize=14)
-    plt.title(
-        "Combined quiet sun flux at peak time with curve fit", fontsize=16
-    )
+    plt.xlabel("Combined NoRP and RSTN frequencies (GHz)", fontsize=14)
+    plt.ylabel("Combined NoRP and RSTN flux (SFU)", fontsize=14)
     plt.legend(fontsize=10)
     plt.savefig("./media/figure_03_peak_time.png")
     plt.close()
 
     # Return function call
     return (plt_0, plt_1, plt_2)
+
+
+# %% Denoised data peak time plotter
+def denoise_plotter(arg):
+    # Local variable repo
+    (
+        data_peak_freq,
+        data_peak_flux_denoise,
+        data_norp_peak_time,
+        denoise_param,
+        plas_param,
+    ) = [arg[i] for i in range(len(arg))]
+
+    # Fitted gyro function repo
+    data_gyro = gyro_model(data_peak_freq, *denoise_param)
+
+    # Fit label local repo
+    label_gyro = fit_label(denoise_param, plas_param)[0]
+
+    # Plot generation
+    plt_0 = plt.plot(
+        data_peak_freq,
+        data_peak_flux_denoise,
+        ".",
+        markersize=10,
+        label="Denoised flux sequence at peak time: " + data_norp_peak_time,
+    )
+    # Gyro fit curve
+    plt_1 = plt.plot(
+        data_peak_freq,
+        data_gyro,
+        "--",
+        label=label_gyro,
+    )
+
+    # Plot axis scale definer
+    plt.xscale("log")
+    plt.yscale("log")
+
+    # Plot customizations
+    plt.xlabel(
+        "Combined NoRP and RSTN frequencies at peak time (GHz)", fontsize=14
+    )
+    plt.ylabel("Low frequency denoised flux (SFU)", fontsize=14)
+    plt.legend(fontsize=10)
+    plt.savefig("./media/figure_04_denoised.png")
+    plt.close()
+
+    # Return function call
+    return (plt_0, plt_1)
 
 
 # %% Plot generator
@@ -474,7 +517,7 @@ def plot_generator(arg):
         A collection of plots.
     """
     # Local variable repo
-    arg_norp, arg_rstn, arg_combine, arg_peak = [
+    arg_norp, arg_rstn, arg_combine, arg_peak, arg_denoise = [
         arg[i] for i in range(len(arg))
     ]
 
@@ -485,6 +528,7 @@ def plot_generator(arg):
         log_plotter(arg_combine),
         log_avg_plotter(arg_combine),
         peak_plotter(arg_peak),
+        denoise_plotter(arg_denoise),
     )
 
     # Return function call

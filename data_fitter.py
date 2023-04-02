@@ -241,3 +241,39 @@ def plas_fitter(data_x, data_y, cut):
 
     # Function return
     return (params, cov, chi_sqr, chi_p_val)
+
+
+# %% Gyro model denoiser (cut plas model)
+def gyro_pass(data_freq, data_flux, cut, plas_param):
+    """
+    Parameters
+    ----------
+    data_freq : array
+        Peak time freq array.
+    data_flux : array
+        Peak time flux array.
+    cut : float
+        Low freq cut-off value.
+    plas_param : tuple
+        Tuple of plas model fit param.
+
+    Returns
+    -------
+    data_y_gyro : array
+        Denoised flux array for gyro fitting.
+    """
+    # Cut-off array local repo
+    data_x, data_y, data_y_base = (
+        data_freq[data_freq <= cut],
+        data_flux[data_freq <= cut],
+        data_flux[data_freq > cut],
+    )
+
+    # Get denoised flux array in plas model domain
+    data_y_pass = data_y - plas_model(data_x, *plas_param)
+
+    # Get denoised flux data array for gyro fitting
+    data_y_gyro = np.concatenate([data_y_pass, data_y_base])
+
+    # Return denoised result
+    return data_y_gyro
