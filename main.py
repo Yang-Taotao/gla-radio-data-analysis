@@ -118,6 +118,8 @@ plt_arg1, plt_arg2, plt_arg3, plt_arg4 = (
         peak_time_freq,
         peak_time_flux,
         norp_peak_time,
+        gyro_param, 
+        plas_param,
     ),
 )
 

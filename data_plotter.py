@@ -274,51 +274,6 @@ def log_plotter(arg):
     return (plt_0, plt_1, plt_2)
 
 
-# %% Peak plotter
-# Peak time plotter
-def peak_plotter(arg):
-    """
-    Parameters
-    ----------
-    arg : tuple
-        Peak plotter argument with freq, flux, and peak time.
-
-    Returns
-    -------
-    None.
-
-    """
-    # Local variable repo
-    data_peak_freq, data_peak_flux, data_norp_peak_time = [
-        arg[i] for i in range(len(arg))
-    ]
-
-    # Plot generation
-    plt_0 = plt.plot(
-        data_peak_freq,
-        data_peak_flux,
-        "+-",
-        markersize=10,
-        markeredgecolor="red",
-        label=data_norp_peak_time,
-    )
-
-    # Plot axis scale definer
-    plt.xscale("log")
-    plt.yscale("log")
-
-    # Plot customizations
-    plt.xlabel("Combined frequencies at peak time (GHz)", fontsize=14)
-    plt.ylabel("Valid quiet sun filtered flux", fontsize=14)
-    plt.title("Combined quiet sun flux at peak time", fontsize=16)
-    plt.legend(fontsize=10)
-    plt.savefig("./media/figure_03_peak_time.png")
-    plt.close()
-
-    # Return function call
-    return (plt_0)
-
-
 # %% Combined peak time plotter
 # Combined peak time plotter
 def log_avg_plotter(arg):
@@ -417,6 +372,79 @@ def log_avg_plotter(arg):
     return (data_norp_peak_avg, data_apl_peak_avg, data_phf_peak_avg)
 
 
+# %% Peak plotter
+# Peak time plotter
+def peak_plotter(arg):
+    """
+    Parameters
+    ----------
+    arg : tuple
+        Peak plotter argument with freq, flux, and peak time.
+
+    Returns
+    -------
+    None.
+
+    """
+    # Local variable repo
+    (
+        data_peak_freq, 
+        data_peak_flux, 
+        data_norp_peak_time, 
+        gyro_param, 
+        plas_param,
+     ) = [arg[i] for i in range(len(arg))]
+    
+    # Fitted function repo
+    data_gyro, data_plas = (
+        gyro_model(data_peak_freq, *gyro_param),
+        plas_model(data_peak_freq, *plas_param),
+    )
+
+    # Plot generation
+    plt_0 = plt.plot(
+        data_peak_freq,
+        data_peak_flux,
+        ".",
+        markersize=10,
+        markeredgecolor="black",
+        label=data_norp_peak_time,
+    )
+    # Gyro fit curve
+    plt_1 = plt.plot(
+        data_peak_freq,
+        data_gyro,
+        "+--",
+        markersize=10,
+        markeredgecolor="red",
+        label=data_gyro,
+    )
+    # Plas fit curve
+    plt_2 = plt.plot(
+        data_peak_freq,
+        data_plas,
+        "x--",
+        markersize=10,
+        markeredgecolor="blue",
+        label=data_plas,
+    )
+
+    # Plot axis scale definer
+    plt.xscale("log")
+    plt.yscale("log")
+
+    # Plot customizations
+    plt.xlabel("Combined frequencies at peak time (GHz)", fontsize=14)
+    plt.ylabel("Valid quiet sun filtered flux (SFU)", fontsize=14)
+    plt.title("Combined quiet sun flux at peak time with curve fit", fontsize=16)
+    plt.legend(fontsize=10)
+    plt.savefig("./media/figure_03_peak_time.png")
+    plt.close()
+
+    # Return function call
+    return (plt_0, plt_1, plt_2)
+
+
 # %% Plot generator
 # Define generator function
 def plot_generator(arg):
@@ -441,8 +469,8 @@ def plot_generator(arg):
         norp_plotter(arg_norp),
         rstn_plotter(arg_rstn),
         log_plotter(arg_combine),
-        peak_plotter(arg_peak),
         log_avg_plotter(arg_combine),
+        peak_plotter(arg_peak),
     )
 
     # Return function call
