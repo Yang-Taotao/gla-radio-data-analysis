@@ -154,20 +154,23 @@ def gyro_fitter(data_freq, data_flux, cut):
 
     # Results print out
     # Gyro fitter result title
+    print("=" * 30)
+    print("=" * 30)
     print(f"{'Gyro fitter results':<20}")
-    print()
+    print("=" * 10)
     # Print fit parameters
     print(f"{'Gyro fitter fitted parameters':<20}")
     print(f"{'A:':<20}{params[0]:>10.3f}")
     print(f"{'B:':<20}{params[1]:>10.3f}")
     print(f"{'a:':<20}{params[2]:>10.3f}")
     print(f"{'b:':<20}{params[3]:>10.3f}")
-    print()
+    print("=" * 10)
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
     print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}")
     print(f"{'p-value:':<20}{chi_p_val:>10.3f}")
-    print()
+    print("=" * 30)
+    print("=" * 30)
 
     # Function return
     return (params, cov, chi_sqr, chi_p_val)
@@ -226,18 +229,21 @@ def plas_fitter(data_x, data_y, cut):
 
     # Results print out
     # Gyro fitter result title
+    print("=" * 30)
+    print("=" * 30)
     print(f"{'Plas fitter results':<20}")
-    print()
+    print("=" * 10)
     # Print fit parameters
     print(f"{'Plas fitter fitted parameters':<20}")
     print(f"{'c:':<20}{params[0]:>10.3f}")
     print(f"{'k:':<20}{params[1]:>10.3f}")
-    print()
+    print("=" * 10)
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
     print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}")
     print(f"{'p-value:':<20}{chi_p_val:>10.3f}")
-    print()
+    print("=" * 30)
+    print("=" * 30)
 
     # Function return
     return (params, cov, chi_sqr, chi_p_val)
