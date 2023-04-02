@@ -91,10 +91,10 @@ def fit_label(gyro_param, plas_param):
     # Label generator
     label_gyro, label_plas = (
         # Gyro model
-        rf"Gyro model: $y={fit_a_cap:.3g}x^{{{fit_a:.3g}}}"
-        rf"[1-\exp({{-({fit_b_cap:.3g})x^{{-{fit_b:.3g}}}}})]$",
+        rf"Gyro model: $y={fit_a_cap:.5g}x^{{{fit_a:.5g}}}"
+        rf"[1-\exp({{-({fit_b_cap:.5g})x^{{-{fit_b:.5g}}}}})]$",
         # Plas model
-        rf"Plas model: $y={fit_c:.3g}x^{{{fit_k:.3g}}}$",
+        rf"Plas model: $y={fit_c:.5g}x^{{{fit_k:.5g}}}$",
     )
 
     # Result return
@@ -159,18 +159,18 @@ def gyro_fitter(data_freq, data_flux, title):
     print("=" * 70)
     # Print fit parameters
     print(f"{'Gyro fitter fitted parameters':<20}")
-    print(f"{'A:':<20}{params[0]:>10.3g}{'':10}{'B:':<20}{params[1]:>10.3g}")
-    print(f"{'a:':<20}{params[2]:>10.3g}{'':10}{'b:':<20}{params[3]:>10.3g}")
+    print(f"{'A:':<20}{params[0]:>10.5g}{'':10}{'B:':<20}{params[1]:>10.5g}")
+    print(f"{'a:':<20}{params[2]:>10.5g}{'':10}{'b:':<20}{params[3]:>10.5g}")
     print(
-        f"{'Low freq slope:':<20}{params[2]:>10.3g}"
-        f"{'':10}{'High freq slope:':<20}{params[2]-params[3]:>10.3g}"
+        f"{'Low freq slope:':<20}{params[2]:>10.5g}"
+        f"{'':10}{'High freq slope:':<20}{params[2]-params[3]:>10.5g}"
     )
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
     print(
-        f"{'Chi-square:':<20}{chi_sqr:>10.3g}"
-        f"{'':10}{'p-value:':<20}{chi_p_val:>10.3g}"
+        f"{'Chi-square:':<20}{chi_sqr:>10.5g}"
+        f"{'':10}{'p-value:':<20}{chi_p_val:>10.5g}"
     )
     print("=" * 70)
     print()
@@ -237,13 +237,13 @@ def plas_fitter(data_x, data_y, cut):
     print("=" * 70)
     # Print fit parameters
     print(f"{'Plas fitter fitted parameters':<20}")
-    print(f"{'c:':<20}{params[0]:>10.3g}{'':10}{'k:':<20}{params[1]:>10.3g}")
+    print(f"{'c:':<20}{params[0]:>10.5g}{'':10}{'k:':<20}{params[1]:>10.5g}")
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
     print(
-        f"{'Chi-square:':<20}{chi_sqr:>10.3g}"
-        f"{'':10}{'p-value:':<20}{chi_p_val:>10.3g}"
+        f"{'Chi-square:':<20}{chi_sqr:>10.5g}"
+        f"{'':10}{'p-value:':<20}{chi_p_val:>10.5g}"
     )
     print("=" * 70)
     print()

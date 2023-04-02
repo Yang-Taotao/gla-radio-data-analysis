@@ -475,6 +475,7 @@ def denoise_plotter(arg):
         data_peak_freq,
         data_peak_flux_denoise,
         ".",
+        color="black",
         markersize=10,
         label="Denoised flux sequence at peak time: " + data_norp_peak_time,
     )
@@ -482,7 +483,9 @@ def denoise_plotter(arg):
     plt_1 = plt.plot(
         data_peak_freq,
         data_gyro,
-        "--",
+        "+--",
+        markersize=10,
+        markeredgecolor="red",
         label=label_gyro,
     )
 
