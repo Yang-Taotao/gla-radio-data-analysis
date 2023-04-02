@@ -83,8 +83,8 @@ freq_cut = 2
 # %% Generate combined fit results
 # Get fitted results
 results_gyro, results_plas = (
-    gyro_fitter(peak_time_freq, peak_time_flux, freq_cut),
-    plas_fitter(peak_time_freq, peak_time_flux, freq_cut),
+    gyro_fitter(peak_time_freq, peak_time_flux, freq_cut, ""),
+    plas_fitter(peak_time_freq, peak_time_flux, freq_cut, ""),
 )
 # Assign fit parameters
 gyro_param, plas_param = results_gyro[0], results_plas[0]
@@ -95,7 +95,7 @@ gyro_flux_denoise = gyro_pass(
 )
 
 # %% Refit with denoised data
-results_denoise = gyro_fitter(peak_time_freq, gyro_flux_denoise, freq_cut)
+results_denoise = gyro_fitter(peak_time_freq, gyro_flux_denoise, freq_cut, "-denoised")
 denoise_param = results_denoise[0]
 
 # %% Plotter argument assignment
