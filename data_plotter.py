@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import scienceplots
 
 # Custom module import
-from data_fitter import gyro_model, plas_model
+from data_fitter import gyro_model, plas_model, fit_label
 
 # %%  Plot style config
 # Plot style configuration
@@ -393,13 +393,17 @@ def peak_plotter(arg):
         data_norp_peak_time, 
         gyro_param, 
         plas_param,
+        freq_cut,
      ) = [arg[i] for i in range(len(arg))]
     
     # Fitted function repo
     data_gyro, data_plas = (
-        gyro_model(data_peak_freq, *gyro_param),
-        plas_model(data_peak_freq, *plas_param),
+        gyro_model(data_peak_freq[data_peak_freq >= freq_cut], *gyro_param),
+        plas_model(data_peak_freq[data_peak_freq <= freq_cut], *plas_param),
     )
+
+    # Fit label local repo
+    label_gyro, label_plas = fit_label(gyro_param, plas_param)
 
     # Plot generation
     plt_0 = plt.plot(
@@ -410,23 +414,23 @@ def peak_plotter(arg):
         markeredgecolor="black",
         label=data_norp_peak_time,
     )
-    # Gyro fit curve
+    # Gyro fit curve - x >= 2
     plt_1 = plt.plot(
-        data_peak_freq,
+        data_peak_freq[data_peak_freq >= freq_cut],
         data_gyro,
         "+--",
         markersize=10,
         markeredgecolor="red",
-        label=data_gyro,
+        label=label_gyro,
     )
-    # Plas fit curve
+    # Plas fit curve - x <= 2
     plt_2 = plt.plot(
-        data_peak_freq,
+        data_peak_freq[data_peak_freq <= freq_cut],
         data_plas,
         "x--",
         markersize=10,
         markeredgecolor="blue",
-        label=data_plas,
+        label=label_plas,
     )
 
     # Plot axis scale definer

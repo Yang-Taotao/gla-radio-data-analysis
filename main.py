@@ -75,10 +75,12 @@ peak_arg = (arg_time, arg_freq, arg_flux)
 peak_time_freq, peak_time_flux = collector(*peak_arg)
 
 # %% Curve fitter
+# Define cut-off freq
+freq_cut = 1
 # Generate combined fit results
 results_gyro, results_plas = (
-    gyro_fitter(peak_time_freq, peak_time_flux),
-    plas_fitter(peak_time_freq, peak_time_flux),
+    gyro_fitter(peak_time_freq, peak_time_flux, freq_cut),
+    plas_fitter(peak_time_freq, peak_time_flux, freq_cut),
 )
 
 # %% Fit parameter cache
@@ -120,6 +122,7 @@ plt_arg1, plt_arg2, plt_arg3, plt_arg4 = (
         norp_peak_time,
         gyro_param, 
         plas_param,
+        freq_cut
     ),
 )
 

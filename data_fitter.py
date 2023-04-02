@@ -28,9 +28,32 @@ def plas_model(x_val, param_c, param_k):
     return param_c * x_val**param_k
 
 
+# %% Fitted function result label generator
+def fit_label(gyro_param, plas_param):
+    # Local fit cariable unpack
+    fit_a_cap, fit_b_cap, fit_a, fit_b, fit_c, fit_k = (
+        gyro_param[0],
+        gyro_param[1],
+        gyro_param[2],
+        gyro_param[3],
+        plas_param[0],
+        plas_param[1],
+    )
+
+    # Label generator
+    label_gyro, label_plas = (
+        fr'Gyro model: $y={fit_a_cap:.3g}x^{{{fit_a:.3g}}}[1-\exp({{-({fit_b_cap:.3g})x^{{-{fit_b:.3g}}}}})]$',
+        fr'Plas model: $y={fit_c:.3g}x^{{{fit_k:.3g}}}$',
+    )
+
+    # Result return
+    return (label_gyro, label_plas)
+
+
+
 # %% Gyro fitter
 # Gyro fitter function
-def gyro_fitter(data_freq, data_flux):
+def gyro_fitter(data_freq, data_flux, cut):
     """
     Parameters
     ----------
@@ -38,6 +61,8 @@ def gyro_fitter(data_freq, data_flux):
         Combined freq data array.
     data_flux : array
         Combined flux data array.
+    cut : float
+        Cut-off point for different fits.
 
     Returns
     -------
@@ -52,8 +77,8 @@ def gyro_fitter(data_freq, data_flux):
     """
     # Generate filtered data
     data_x, data_y = (
-        data_freq[data_freq > 2],
-        data_flux[data_freq > 2],
+        data_freq[data_freq >= cut],
+        data_flux[data_freq >= cut],
     )
 
     # Iniitial parameter guess
@@ -100,7 +125,7 @@ def gyro_fitter(data_freq, data_flux):
 
 # %% Plas fitter
 # Plas fitter function
-def plas_fitter(data_x, data_y):
+def plas_fitter(data_x, data_y, cut):
     """
     Parameters
     ----------
@@ -108,6 +133,8 @@ def plas_fitter(data_x, data_y):
         Combined freq data array.
     data_y : array
         Combined flux data array.
+    cut : float
+        Cut-off point for different fits.
 
     Returns
     -------
@@ -122,8 +149,8 @@ def plas_fitter(data_x, data_y):
     """
     # Generate filtered data
     data_x, data_y = (
-        data_x[data_x <= 2],
-        data_y[data_x <= 2],
+        data_x[data_x <= cut],
+        data_y[data_x <= cut],
     )
 
     # Iniitial parameter guess
