@@ -36,8 +36,8 @@ def gyro_model(x_val, param_a_cap, param_b_cap, param_a, param_b):
     # Return gyro model
     return (
         param_a_cap
-        * x_val**param_a
-        * (1 - np.exp(-param_b_cap * x_val ** (-param_b)))
+        * (x_val**param_a)
+        * (1 - np.exp(-param_b_cap * (x_val ** (-param_b))))
     )
 
 
@@ -60,7 +60,7 @@ def plas_model(x_val, param_c, param_k):
 
     """
     # Return plas model
-    return param_c * x_val**param_k
+    return param_c * (x_val**param_k)
 
 
 # %% Fitted function result label generator
@@ -103,7 +103,7 @@ def fit_label(gyro_param, plas_param):
 
 # %% Gyro fitter
 # Gyro fitter function
-def gyro_fitter(data_freq, data_flux, cut, title):
+def gyro_fitter(data_freq, data_flux, cut):
     """
     Parameters
     ----------
@@ -113,8 +113,6 @@ def gyro_fitter(data_freq, data_flux, cut, title):
         Combined flux data array.
     cut : float
         Cut-off point for different fits.
-    title : string
-        Additional print out customization. 
 
     Returns
     -------
@@ -158,7 +156,7 @@ def gyro_fitter(data_freq, data_flux, cut, title):
     # Gyro fitter result title
     print()
     print("=" * 30)
-    print(f"{'Gyro fitter results' + title:<20}")
+    print(f"{'Gyro fitter results':<20}")
     print()
     # Print fit parameters
     print(f"{'Gyro fitter fitted parameters':<20}")
@@ -180,7 +178,7 @@ def gyro_fitter(data_freq, data_flux, cut, title):
 
 # %% Plas fitter
 # Plas fitter function
-def plas_fitter(data_x, data_y, cut, title):
+def plas_fitter(data_x, data_y, cut):
     """
     Parameters
     ----------
@@ -190,8 +188,6 @@ def plas_fitter(data_x, data_y, cut, title):
         Combined flux data array.
     cut : float
         Cut-off point for different fits.
-    title : string
-        Additional print out customization.
 
     Returns
     -------
@@ -206,8 +202,8 @@ def plas_fitter(data_x, data_y, cut, title):
     """
     # Generate filtered data
     data_x, data_y = (
-        data_x[data_x <= cut],
-        data_y[data_x <= cut],
+        data_x[data_x < cut],
+        data_y[data_x < cut],
     )
 
     # Iniitial parameter guess
@@ -225,6 +221,74 @@ def plas_fitter(data_x, data_y, cut, title):
     # Chi2 Tester
     # Chi2 calculation and dof generation
     chi_sqr, chi_dof = (
+        np.sum((fit_resid)**2 / fit_model),
+        len(data_x) - len(params),
+    )
+    # Chi2 p-value calculation
+    chi_p_val = 1 - chi2.cdf(chi_sqr, chi_dof)
+
+    # Results print out
+    # Gyro fitter result title
+    print()
+    print("=" * 30)
+    print(f"{'Plas fitter results':<20}")
+    print()
+    # Print fit parameters
+    print(f"{'Plas fitter fitted parameters':<20}")
+    print(f"{'c:':<20}{params[0]:>10.3f}")
+    print(f"{'k:':<20}{params[1]:>10.3f}")
+    print()
+    # Print chi2 results
+    print(f"{'Chi-square test result':<20}")
+    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}")
+    print(f"{'p-value:':<20}{chi_p_val:>10.3f}")
+    print("=" * 30)
+    print()
+
+    # Function return
+    return (params, cov, chi_sqr, chi_p_val)
+
+# %% Gyro fitter
+# Gyro fitter function
+def denoise_fitter(data_x, data_y):
+    """
+    Parameters
+    ----------
+    data_freq : array
+        Combined freq data array.
+    data_flux : array
+        Combined flux data array.
+    cut : float
+        Cut-off point for different fits.
+    title : string
+        Additional print out customization. 
+
+    Returns
+    -------
+    params : array
+        Fit parameters array.
+    cov : float
+        Covariance matrix of the fit.
+    chi_sqr :float
+        Chi-squared value of the fit.
+    chi_p_val : float
+        The p-value from the chi-sqaured test.
+    """
+    # Iniitial parameter guess
+    param_guess = [1, 1, 1, 1]  # param_A, param_B, param_a, param_b
+
+    # Curve fit results
+    params, cov = curve_fit(gyro_model, data_x, data_y, p0=param_guess)
+
+    # Residuals generator
+    # Get fitted model
+    fit_model = gyro_model(data_x, *params)
+    # Residual generator
+    fit_resid = data_y - fit_model
+
+    # Chi2 Tester
+    # Chi2 calculation and dof generation
+    chi_sqr, chi_dof = (
         np.sum(fit_resid**2 / fit_model),
         len(data_x) - len(params),
     )
@@ -235,12 +299,14 @@ def plas_fitter(data_x, data_y, cut, title):
     # Gyro fitter result title
     print()
     print("=" * 30)
-    print(f"{'Plas fitter results' + title:<20}")
+    print(f"{'Denoised gyro fitter results':<20}")
     print()
     # Print fit parameters
-    print(f"{'Plas fitter fitted parameters':<20}")
-    print(f"{'c:':<20}{params[0]:>10.3f}")
-    print(f"{'k:':<20}{params[1]:>10.3f}")
+    print(f"{'Gyro fitter fitted parameters':<20}")
+    print(f"{'A:':<20}{params[0]:>10.3f}")
+    print(f"{'B:':<20}{params[1]:>10.3f}")
+    print(f"{'a:':<20}{params[2]:>10.3f}")
+    print(f"{'b:':<20}{params[3]:>10.3f}")
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
@@ -274,9 +340,9 @@ def gyro_pass(data_freq, data_flux, cut, plas_param):
     """
     # Cut-off array local repo
     data_x, data_y, data_y_base = (
-        data_freq[data_freq <= cut],
-        data_flux[data_freq <= cut],
-        data_flux[data_freq > cut],
+        data_freq[data_freq < cut],
+        data_flux[data_freq < cut],
+        data_flux[data_freq >= cut],
     )
 
     # Get denoised flux array in plas model domain

@@ -403,7 +403,7 @@ def peak_plotter(arg):
     # Fitted function repo
     data_gyro, data_plas = (
         gyro_model(data_peak_freq[data_peak_freq >= freq_cut], *gyro_param),
-        plas_model(data_peak_freq[data_peak_freq <= freq_cut], *plas_param),
+        plas_model(data_peak_freq[data_peak_freq < freq_cut], *plas_param),
     )
 
     # Fit label local repo
@@ -414,6 +414,7 @@ def peak_plotter(arg):
         data_peak_freq,
         data_peak_flux,
         ".",
+        color="black",
         markersize=10,
         markeredgecolor="black",
         label="Flux sequence at peak time: " + data_norp_peak_time,
@@ -427,9 +428,9 @@ def peak_plotter(arg):
         markeredgecolor="red",
         label=label_gyro,
     )
-    # Plas fit curve - x <= 2
+    # Plas fit curve - x < 2
     plt_2 = plt.plot(
-        data_peak_freq[data_peak_freq <= freq_cut],
+        data_peak_freq[data_peak_freq < freq_cut],
         data_plas,
         "x--",
         markersize=10,

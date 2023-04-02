@@ -14,7 +14,7 @@ from data_handler import loader, validator, quiet_sun, collector
 from data_plotter import plot_generator, log_avg_plotter
 
 # Data fitter import
-from data_fitter import gyro_fitter, plas_fitter, gyro_pass
+from data_fitter import gyro_fitter, plas_fitter, gyro_pass, denoise_fitter
 
 # %% Data path and peak time assignment
 # Assign norp, apl, and phf file path
@@ -83,19 +83,20 @@ freq_cut = 2
 # %% Generate combined fit results
 # Get fitted results
 results_gyro, results_plas = (
-    gyro_fitter(peak_time_freq, peak_time_flux, freq_cut, ""),
-    plas_fitter(peak_time_freq, peak_time_flux, freq_cut, ""),
+    gyro_fitter(peak_time_freq, peak_time_flux, freq_cut),
+    plas_fitter(peak_time_freq, peak_time_flux, freq_cut),
 )
 # Assign fit parameters
 gyro_param, plas_param = results_gyro[0], results_plas[0]
 
 # %% Flux array denoise at low freq
-gyro_flux_denoise = gyro_pass(
-    peak_time_freq, peak_time_flux, freq_cut, plas_param
+gyro_freq_denoise, gyro_flux_denoise = (
+    peak_time_freq,
+    gyro_pass(peak_time_freq, peak_time_flux, freq_cut, plas_param),
 )
 
 # %% Refit with denoised data
-results_denoise = gyro_fitter(peak_time_freq, gyro_flux_denoise, freq_cut, "-denoised")
+results_denoise = denoise_fitter(gyro_freq_denoise, gyro_flux_denoise)
 denoise_param = results_denoise[0]
 
 # %% Plotter argument assignment
@@ -137,7 +138,7 @@ plt_arg1, plt_arg2, plt_arg3, plt_arg4, plt_arg5 = (
     ),
     # Denoised plotter arguments
     (
-        peak_time_freq,
+        gyro_freq_denoise,
         gyro_flux_denoise,
         norp_peak_time,
         denoise_param,
