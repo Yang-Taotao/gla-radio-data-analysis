@@ -159,12 +159,19 @@ def gyro_fitter(data_freq, data_flux, cut):
     print("=" * 70)
     # Print fit parameters
     print(f"{'Gyro fitter fitted parameters':<20}")
-    print(f"{'A:':<20}{params[0]:>10.3f}{'':10}{'B:':<20}{params[1]:>10.3f}")
-    print(f"{'a:':<20}{params[2]:>10.3f}{'':10}{'b:':<20}{params[3]:>10.3f}")
+    print(f"{'A:':<20}{params[0]:>10.3g}{'':10}{'B:':<20}{params[1]:>10.3g}")
+    print(f"{'a:':<20}{params[2]:>10.3g}{'':10}{'b:':<20}{params[3]:>10.3g}")
+    print(
+        f"{'Low freq slope:':<20}{params[2]:>10.3g}"
+        f"{'':10}{'High freq slope:':<20}{params[2]-params[3]:>10.3g}"
+    )
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
-    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}{'':10}{'p-value:':<20}{chi_p_val:>10.3f}")
+    print(
+        f"{'Chi-square:':<20}{chi_sqr:>10.3g}"
+        f"{'':10}{'p-value:':<20}{chi_p_val:>10.3g}"
+    )
     print("=" * 70)
     print()
 
@@ -217,7 +224,7 @@ def plas_fitter(data_x, data_y, cut):
     # Chi2 Tester
     # Chi2 calculation and dof generation
     chi_sqr, chi_dof = (
-        np.sum((fit_resid)**2 / fit_model),
+        np.sum((fit_resid) ** 2 / fit_model),
         len(data_x) - len(params),
     )
     # Chi2 p-value calculation
@@ -230,16 +237,20 @@ def plas_fitter(data_x, data_y, cut):
     print("=" * 70)
     # Print fit parameters
     print(f"{'Plas fitter fitted parameters':<20}")
-    print(f"{'c:':<20}{params[0]:>10.3f}{'':10}{'k:':<20}{params[1]:>10.3f}")
+    print(f"{'c:':<20}{params[0]:>10.3g}{'':10}{'k:':<20}{params[1]:>10.3g}")
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
-    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}{'':10}{'p-value:':<20}{chi_p_val:>10.3f}")
+    print(
+        f"{'Chi-square:':<20}{chi_sqr:>10.3g}"
+        f"{'':10}{'p-value:':<20}{chi_p_val:>10.3g}"
+    )
     print("=" * 70)
     print()
 
     # Function return
     return (params, cov, chi_sqr, chi_p_val)
+
 
 # %% Gyro fitter
 # Gyro fitter function
@@ -254,7 +265,7 @@ def denoise_fitter(data_x, data_y):
     cut : float
         Cut-off point for different fits.
     title : string
-        Additional print out customization. 
+        Additional print out customization.
 
     Returns
     -------
@@ -295,12 +306,19 @@ def denoise_fitter(data_x, data_y):
     print("=" * 70)
     # Print fit parameters
     print(f"{'Gyro fitter fitted parameters':<20}")
-    print(f"{'A:':<20}{params[0]:>10.3f}{'':10}{'B:':<20}{params[1]:>10.3f}")
-    print(f"{'a:':<20}{params[2]:>10.3f}{'':10}{'b:':<20}{params[3]:>10.3f}")
+    print(f"{'A:':<20}{params[0]:>10.3g}{'':10}{'B:':<20}{params[1]:>10.3g}")
+    print(f"{'a:':<20}{params[2]:>10.3g}{'':10}{'b:':<20}{params[3]:>10.3g}")
+    print(
+        f"{'Low freq slope:':<20}{params[2]:>10.3g}"
+        f"{'':10}{'High freq slope:':<20}{params[2]-params[3]:>10.3g}"
+    )
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
-    print(f"{'Chi-square:':<20}{chi_sqr:>10.3f}{'':10}{'p-value:':<20}{chi_p_val:>10.3f}")
+    print(
+        f"{'Chi-square:':<20}{chi_sqr:>10.3g}"
+        f"{'':10}{'p-value:':<20}{chi_p_val:>10.3g}"
+    )
     print("=" * 70)
     print()
 
