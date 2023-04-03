@@ -156,23 +156,21 @@ def gyro_fitter(data_freq, data_flux, title):
     # Gyro fitter result title
     print()
     print(f"{'Gyro fitter results ' + title:<20}")
-    print("=" * 70)
+    print("=" * 30)
     # Print fit parameters
-    print(f"{'Gyro fitter fitted parameters':<20}")
-    print(f"{'A:':<20}{params[0]:>10.5g}{'':10}{'B:':<20}{params[1]:>10.5g}")
-    print(f"{'a:':<20}{params[2]:>10.5g}{'':10}{'b:':<20}{params[3]:>10.5g}")
-    print(
-        f"{'Low freq slope:':<20}{params[2]:>10.5g}"
-        f"{'':10}{'High freq slope:':<20}{params[2]-params[3]:>10.5g}"
-    )
+    print(f"{'Gyro fitter fitted parameters':<15}")
+    print(f"{'A:':<20}{params[0]:>10.5g}")
+    print(f"{'B:':<20}{params[1]:>10.5g}")
+    print(f"{'a:':<20}{params[2]:>10.5g}")
+    print(f"{'b:':<20}{params[3]:>10.5g}")
+    print(f"{'Low freq slope:':<20}{params[2]:>10.5g}")
+    print(f"{'High freq slope:':<20}{params[2]-params[3]:>10.5g}")
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
-    print(
-        f"{'Chi-square:':<20}{chi_sqr:>10.5g}"
-        f"{'':10}{'p-value:':<20}{chi_p_val:>10.5g}"
-    )
-    print("=" * 70)
+    print(f"{'Chi-square:':<20}{chi_sqr:>10.5g}")
+    print(f"{'p-value:':<20}{chi_p_val:>10.5g}")
+    print("=" * 30)
     print()
 
     # Function return
@@ -234,18 +232,17 @@ def plas_fitter(data_x, data_y, cut):
     # Gyro fitter result title
     print()
     print(f"{'Plas fitter results':<20}")
-    print("=" * 70)
+    print("=" * 30)
     # Print fit parameters
     print(f"{'Plas fitter fitted parameters':<20}")
-    print(f"{'c:':<20}{params[0]:>10.5g}{'':10}{'k:':<20}{params[1]:>10.5g}")
+    print(f"{'c:':<20}{params[0]:>10.5g}")
+    print(f"{'k:':<20}{params[1]:>10.5g}")
     print()
     # Print chi2 results
     print(f"{'Chi-square test result':<20}")
-    print(
-        f"{'Chi-square:':<20}{chi_sqr:>10.5g}"
-        f"{'':10}{'p-value:':<20}{chi_p_val:>10.5g}"
-    )
-    print("=" * 70)
+    print(f"{'Chi-square:':<20}{chi_sqr:>10.5g}")
+    print(f"{'p-value:':<20}{chi_p_val:>10.5g}")
+    print("=" * 30)
     print()
 
     # Function return
